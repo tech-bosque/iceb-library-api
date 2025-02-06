@@ -20,8 +20,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PublisherControllerTest {
-
 
     @Autowired
     private MockMvc mockMvc;
