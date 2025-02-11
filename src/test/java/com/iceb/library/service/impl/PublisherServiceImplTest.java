@@ -4,6 +4,7 @@ import com.iceb.library.TestUtils;
 import com.iceb.library.dto.PublisherRequestDto;
 import com.iceb.library.dto.PublisherResponseDto;
 import com.iceb.library.entity.Publisher;
+import com.iceb.library.exception.PublisherNotFoundException;
 import com.iceb.library.repository.PublisherRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
@@ -50,6 +52,18 @@ public class PublisherServiceImplTest {
 
         Assertions.assertEquals(publisherResponseDto.getName(), publisher.getName());
         Assertions.assertFalse(publisherResponseDto.getArchived());
+    }
+
+    @Test
+    void getPublisherByIdNotFoundTest() {
+
+        UUID publisherId = UUID.randomUUID();
+
+        when(publisherRepository.findById(publisherId)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(PublisherNotFoundException.class, () -> {
+            publisherServiceImpl.getPublisherById(publisherId);
+        });
     }
 
     @Test
