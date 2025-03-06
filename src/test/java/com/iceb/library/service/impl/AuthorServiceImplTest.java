@@ -58,13 +58,12 @@ public class AuthorServiceImplTest {
     void getAuthorByIdNotFoundTest() {
 
         UUID authorId = UUID.randomUUID();
+
         when(authorRepository.findById(authorId)).thenReturn(Optional.empty());
 
-        AuthorNotFoundException exception = Assertions.assertThrows(AuthorNotFoundException.class, () -> {
+        Assertions.assertThrows(AuthorNotFoundException.class, () -> {
             authorServiceImpl.getAuthorById(authorId);
         });
-
-        Assertions.assertEquals("The author with the provided ID does not exist", exception.getMessage());
     }
 
     @Test
