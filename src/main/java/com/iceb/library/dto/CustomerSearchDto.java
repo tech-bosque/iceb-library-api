@@ -1,24 +1,24 @@
 package com.iceb.library.dto;
 
-import com.iceb.library.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerResponseDto {
+public class CustomerSearchDto {
 
-    private UUID id;
     private String name;
+
     private String email;
+
     private String phone;
-    private List<Role> roles;
+
+    private String role;
+
+    private Boolean archived;
 
 }

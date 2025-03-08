@@ -1,7 +1,8 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.CustomerRequestDto;
 import com.iceb.library.dto.CustomerResponseDto;
+import com.iceb.library.dto.CustomerSearchDto;
+import com.iceb.library.dto.CustomerRequestDto;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.exception.CustomerNotFoundException;
 import com.iceb.library.repository.CustomerRepository;
@@ -58,27 +59,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerResponseDto> searchCustomers(String name, boolean archived) {
-        logger.info("Fetching customers by name containing");
-        logger.debug("Fetching customers with name containing: {}", name);
-
-        List<Customer> customers;
-        if (name == null || name.trim().isEmpty()) {
-            customers = customerRepository.findAllCustomers(archived);
-        } else {
-            customers = customerRepository.findSimilarNames(name, archived);
-        }
-
-        List<CustomerResponseDto> responseDtos = customers.stream()
-                .map(this::mapToResponseDto)
-                .collect(Collectors.toList());
-
-        logger.debug("Fetched customers: {}", responseDtos);
-        logger.info("Fetched customers by name containing successfully");
-        return responseDtos;
-    }
-
-    @Override
     public CustomerResponseDto updateCustomer(UUID id, CustomerRequestDto customerRequestDto) {
         logger.info("Updating customer");
         logger.debug("Updating customer with ID: {} with details: {}", id, customerRequestDto);
@@ -106,6 +86,22 @@ public class CustomerServiceImpl implements CustomerService {
         logger.debug("Archived customer with ID: {}", id);
 
         return mapToResponseDto(archivedCustomer);
+    }
+
+    @Override
+    public List<CustomerResponseDto> searchCustomers(CustomerSearchDto customerSearchDto) {
+        logger.info("Fetching customers with filters");
+        logger.debug("Fetching customers with filters: {}", customerSearchDto);
+
+        List<Customer> customers = customerRepository.searchCustomers(customerSearchDto);
+
+        List<CustomerResponseDto> responseDtos = customers.stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
+
+        logger.debug("Fetched customers: {}", responseDtos);
+        logger.info("Fetched customers with filters successfully");
+        return responseDtos;
     }
 
     private Customer findCustomerById(UUID id) {
