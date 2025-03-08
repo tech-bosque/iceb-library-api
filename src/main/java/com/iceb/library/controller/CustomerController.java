@@ -2,6 +2,7 @@ package com.iceb.library.controller;
 
 import com.iceb.library.dto.CustomerRequestDto;
 import com.iceb.library.dto.CustomerResponseDto;
+import com.iceb.library.dto.CustomerSearchDto;
 import com.iceb.library.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,10 +36,10 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping
-    @Operation(summary = "Get all customers or search by name")
-    public ResponseEntity<List<CustomerResponseDto>> searchCustomers(@RequestParam(required = false) String name, @RequestParam(defaultValue = "false") boolean archived) {
-        List<CustomerResponseDto> customers = customerService.searchCustomers(name, archived);
+    @PostMapping
+    @Operation(summary = "Get all customers or search with filters")
+    public ResponseEntity<List<CustomerResponseDto>> searchCustomers(@RequestBody @Valid CustomerSearchDto customerSearchDto) {
+        List<CustomerResponseDto> customers = customerService.searchCustomers(customerSearchDto);
         return ResponseEntity.ok(customers);
     }
 

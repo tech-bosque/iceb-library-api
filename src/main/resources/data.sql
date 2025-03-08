@@ -1,3 +1,8 @@
+-- Insert Customers
+INSERT INTO customer (id, name, password, email, phone, archived) VALUES
+('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Customer One', '1234', 'one@customer.com', '123456789', false),
+('2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', 'Customer Two', '1234', 'two@customer.com', '987654321', false);
+
 -- Insert Publishers
 INSERT INTO publisher (id, name, archived) VALUES
 ('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Publisher One', false),

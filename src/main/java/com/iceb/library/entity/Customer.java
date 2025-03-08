@@ -1,5 +1,6 @@
 package com.iceb.library.entity;
 
+import com.iceb.library.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class Customer {
 
     @NotNull
     @ElementCollection
-    private List<String> roles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
 
     @NotNull
     private Boolean archived;

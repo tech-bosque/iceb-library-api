@@ -1,5 +1,6 @@
 package com.iceb.library.repository;
 
+import com.iceb.library.dto.CustomerSearchDto;
 import com.iceb.library.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +11,10 @@ import java.util.UUID;
 
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
-    @Query("SELECT u FROM Customer u WHERE LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%')) AND (:archived = true OR u.archived = :archived)")
-    List<Customer> findSimilarNames(@Param("name") String name, @Param("archived") boolean archived);
-
-    @Query("SELECT u FROM Customer u WHERE :archived = true OR u.archived = :archived")
-    List<Customer> findAllCustomers(@Param("archived") boolean archived);
+    @Query("SELECT c FROM Customer c " +
+            "WHERE (:#{#params.name} IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :#{#params.name}, '%'))) " +
+            "AND (:#{#params.email} IS NULL OR LOWER(c.email) LIKE LOWER(CONCAT('%', :#{#params.email}, '%'))) " +
+            "AND (:#{#params.phone} IS NULL OR LOWER(c.phone) LIKE LOWER(CONCAT('%', :#{#params.phone}, '%'))) " +
+            "AND (:#{#params.archived} IS NULL OR :#{#params.archived} = TRUE OR c.archived = :#{#params.archived})")
+    List<Customer> searchCustomers(@Param("params") CustomerSearchDto params);
 }

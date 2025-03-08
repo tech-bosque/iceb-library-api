@@ -4,7 +4,6 @@ import com.iceb.library.enums.Role;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,11 +30,4 @@ public class CustomerRequestDto {
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
-    public List<String> getRoles() {
-        List<String> roleStrings = new ArrayList<>();
-        for (Role role : roles) {
-            roleStrings.add(role.name());
-        }
-        return roleStrings;
-    }
 }
