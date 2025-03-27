@@ -1,24 +1,12 @@
 package com.iceb.library;
 
 
-import com.iceb.library.dto.AuthorRequestDto;
-import com.iceb.library.dto.AuthorResponseDto;
-import com.iceb.library.dto.BookRequestDto;
-import com.iceb.library.dto.BookResponseDto;
-import com.iceb.library.dto.BookSearchDto;
-import com.iceb.library.dto.GenreRequestDto;
-import com.iceb.library.dto.GenreResponseDto;
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
-import com.iceb.library.dto.TopicRequestDto;
-import com.iceb.library.dto.TopicResponseDto;
-import com.iceb.library.entity.Book;
-import com.iceb.library.entity.Genre;
-import com.iceb.library.entity.Publisher;
-import com.iceb.library.entity.Topic;
-import com.iceb.library.entity.Author;
+import com.iceb.library.dto.*;
+import com.iceb.library.entity.*;
+import com.iceb.library.enums.Role;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class TestUtils {
@@ -191,4 +179,46 @@ public class TestUtils {
                 .build();
     }
 
+    public static Customer customer(Boolean archived) {
+        return Customer.builder()
+                .id(UUID.fromString("123e4567-e89b-12d3-a456-426614174011"))
+                .name("Test Customer")
+                .email("test@test.com")
+                .password("test")
+                .phone("1234567890")
+                .roles(Arrays.asList(Role.CUSTOMER))
+                .archived(archived)
+                .build();
+    }
+
+    public static CustomerRequestDto customerRequestDto() {
+        return CustomerRequestDto.builder()
+                .name("Test Customer")
+                .email("test@test.com")
+                .password("test")
+                .phone("1234567890")
+                .roles(Arrays.asList(Role.CUSTOMER))
+                .build();
+    }
+
+    public static CustomerResponseDto customerResponseDto(Boolean archived) {
+        return CustomerResponseDto.builder()
+                .id(UUID.fromString("123e4567-e89b-12d3-a456-426614174011"))
+                .name("Test Customer")
+                .email("test@example.com")
+                .phone("1234567890")
+                .roles(Arrays.asList(Role.CUSTOMER))
+                .archived(archived)
+                .build();
+    }
+
+    public static CustomerSearchDto customerSearchDto() {
+        return CustomerSearchDto.builder()
+                .name("Test Customer")
+                .email("test@test.com")
+                .phone("1234567890")
+                .role(Arrays.asList(Role.CUSTOMER).toString())
+                .archived(false)
+                .build();
+    }
 }

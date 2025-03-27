@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/customer")
+@RequestMapping("/api/customer")
 @Tag(name = "Customer Management", description = "APIs for managing Customers")
 public class CustomerController {
 
@@ -36,7 +36,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @PostMapping
+    @PostMapping("/search")
     @Operation(summary = "Get all customers or search with filters")
     public ResponseEntity<List<CustomerResponseDto>> searchCustomers(@RequestBody @Valid CustomerSearchDto customerSearchDto) {
         List<CustomerResponseDto> customers = customerService.searchCustomers(customerSearchDto);
