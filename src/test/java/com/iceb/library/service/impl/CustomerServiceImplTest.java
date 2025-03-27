@@ -50,7 +50,7 @@ public class CustomerServiceImplTest {
 
         CustomerResponseDto customerResponseDto = customerServiceImpl.getCustomerById(customer.getId());
 
-        assertThat(customer).usingRecursiveComparison().isEqualTo(customerResponseDto);
+        assertThat(customer).usingRecursiveComparison().ignoringFields("password").isEqualTo(customerResponseDto);
     }
 
     @Test
@@ -94,9 +94,13 @@ public class CustomerServiceImplTest {
         Customer customer = TestUtils.customer(false);
 
         when(customerRepository.findById(customer.getId())).thenReturn(java.util.Optional.of(customer));
+        when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(customer);
 
         customerServiceImpl.deleteCustomer(customer.getId());
 
-        Mockito.verify(customerRepository, Mockito.times(1)).delete(customer);
+        CustomerResponseDto customerResponseDto = customerServiceImpl.deleteCustomer(customer.getId());
+
+        Assertions.assertEquals(customer.getName(), customerResponseDto.getName());
+        Assertions.assertTrue(customerResponseDto.getArchived());
     }
 }

@@ -119,6 +119,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .email(customer.getEmail())
                 .phone(customer.getPhone())
                 .roles(customer.getRoles())
+                .archived(customer.getArchived())
                 .build();
     }
 }

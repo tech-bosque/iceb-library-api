@@ -20,6 +20,6 @@ public class CustomerResponseDto {
     private String email;
     private String phone;
     private List<Role> roles;
-    private boolean archived;
+    private Boolean archived;
 
 }
