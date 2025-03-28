@@ -65,6 +65,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer existingCustomer = findCustomerById(id);
         existingCustomer.setName(customerRequestDto.getName());
+        existingCustomer.setEmail(customerRequestDto.getEmail());
+        existingCustomer.setPhone(customerRequestDto.getPhone());
+        existingCustomer.setRoles(customerRequestDto.getRoles());
+
         Customer updatedCustomer = customerRepository.save(existingCustomer);
 
         logger.info("Updated customer successfully");

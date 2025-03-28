@@ -20,7 +20,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCostumersWithoutParamsTest() {
+    void searchCustomersWithoutParamsTest() {
         Customer secondCustomer = Customer.builder()
                 .id(null)
                 .name("Second Customer")
@@ -42,7 +42,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCostumersByNameTest() {
+    void searchCustomersByNameTest() {
         CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
                 .name(customerTest.getName())
                 .build();
