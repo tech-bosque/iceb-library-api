@@ -1,11 +1,13 @@
 package com.iceb.library.repository;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.entity.Book;
-import com.iceb.library.entity.Genre;
 import com.iceb.library.entity.Author;
+import com.iceb.library.entity.Book;
+import com.iceb.library.entity.Customer;
+import com.iceb.library.entity.Genre;
 import com.iceb.library.entity.Publisher;
 import com.iceb.library.entity.Topic;
+import com.iceb.library.enums.Role;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public abstract class TestRepositoryHelper {
     protected BookRepository bookRepository;
 
     @Autowired
+    protected CustomerRepository customerRepository;
+
+    @Autowired
     protected GenreRepository genreRepository;
 
     @Autowired
@@ -34,6 +39,7 @@ public abstract class TestRepositoryHelper {
     protected TopicRepository topicRepository;
 
     protected Book bookTest;
+    protected Customer customerTest;
     protected Genre genreTest;
     protected Author authorTest;
     protected Publisher publisherTest;
@@ -61,6 +67,10 @@ public abstract class TestRepositoryHelper {
         bookTest.setTopics(Arrays.asList(topicTest));
 
         bookTest = bookRepository.save(bookTest);
+
+        customerTest = TestUtils.customer(false);
+        customerTest.setRoles(Arrays.asList(Role.CUSTOMER));
+        customerTest = customerRepository.save(customerTest);
     }
 
     @AfterEach
@@ -70,5 +80,6 @@ public abstract class TestRepositoryHelper {
         authorRepository.deleteAll();
         publisherRepository.deleteAll();
         topicRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 }
