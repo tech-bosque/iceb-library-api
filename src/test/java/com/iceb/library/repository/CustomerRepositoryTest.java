@@ -12,6 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomerRepositoryTest extends TestRepositoryHelper {
+
     @Test
     void findUserByIdTest() {
         Customer savedCustomer = customerRepository.findById(customerTest.getId()).orElse(null);
@@ -27,7 +28,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
                 .email("second@test.com")
                 .phone("1234567890")
                 .password("test")
-                .roles(Arrays.asList(Role.CUSTOMER))
+                .role(Role.LIBRARIAN)
                 .archived(false)
                 .build();
 
@@ -56,7 +57,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCostumersByEmailTest() {
+    void searchCustomersByEmailTest() {
         CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
                 .email(customerTest.getEmail())
                 .build();
@@ -70,7 +71,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCostumersByPhoneTest() {
+    void searchCustomersByPhoneTest() {
         CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
                 .phone(customerTest.getPhone())
                 .build();
@@ -84,9 +85,9 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCostumersByRoleTest() {
+    void searchCustomersByRoleTest() {
         CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
-                .role(customerTest.getRoles().toString())
+                .role(customerTest.getRole().getValue())
                 .build();
 
         List<Customer> savedCustomers = customerRepository.searchCustomers(customerSearchDto);

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -19,7 +18,7 @@ public class CustomerResponseDto {
     private String name;
     private String email;
     private String phone;
-    private List<Role> roles;
+    private Role role;
     private Boolean archived;
 
 }

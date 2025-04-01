@@ -12,6 +12,7 @@ import com.iceb.library.dto.GenreRequestDto;
 import com.iceb.library.dto.GenreResponseDto;
 import com.iceb.library.dto.PublisherRequestDto;
 import com.iceb.library.dto.PublisherResponseDto;
+import com.iceb.library.dto.RolesResponseDto;
 import com.iceb.library.dto.TopicRequestDto;
 import com.iceb.library.dto.TopicResponseDto;
 import com.iceb.library.entity.Author;
@@ -202,7 +203,7 @@ public class TestUtils {
                 .email("test@test.com")
                 .password("test")
                 .phone("1234567890")
-                .roles(Arrays.asList(Role.CUSTOMER))
+                .role(Role.ADMIN)
                 .archived(archived)
                 .build();
     }
@@ -213,7 +214,7 @@ public class TestUtils {
                 .email("test@test.com")
                 .password("test")
                 .phone("1234567890")
-                .roles(Arrays.asList(Role.CUSTOMER))
+                .role(Role.ADMIN)
                 .build();
     }
 
@@ -223,7 +224,7 @@ public class TestUtils {
                 .name("Test Customer")
                 .email("test@example.com")
                 .phone("1234567890")
-                .roles(Arrays.asList(Role.CUSTOMER))
+                .role(Role.ADMIN)
                 .archived(archived)
                 .build();
     }
@@ -233,8 +234,15 @@ public class TestUtils {
                 .name("Test Customer")
                 .email("test@test.com")
                 .phone("1234567890")
-                .role(Arrays.asList(Role.CUSTOMER).toString())
+                .role(Arrays.asList(Role.LIBRARIAN).toString())
                 .archived(false)
                 .build();
     }
+
+    public static RolesResponseDto rolesResponseDto() {
+        return RolesResponseDto.builder()
+                .roles(Arrays.asList(Role.values()))
+                .build();
+    }
+
 }

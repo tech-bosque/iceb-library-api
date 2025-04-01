@@ -1,5 +1,9 @@
 package com.iceb.library.enums;
 
 public enum Role {
-    ADMIN, CUSTOMER, LIBRARIAN
+    ADMIN, LIBRARIAN;
+
+    public String getValue() {
+        return name();
+    }
 }

@@ -69,7 +69,7 @@ public abstract class TestRepositoryHelper {
         bookTest = bookRepository.save(bookTest);
 
         customerTest = TestUtils.customer(false);
-        customerTest.setRoles(Arrays.asList(Role.CUSTOMER));
+        customerTest.setRole(Role.ADMIN);
         customerTest = customerRepository.save(customerTest);
     }
 

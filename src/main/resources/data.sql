@@ -1,7 +1,7 @@
--- Insert Customers
-INSERT INTO customer (id, name, password, email, phone, archived) VALUES
-('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Customer One', '1234', 'one@customer.com', '123456789', false),
-('2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', 'Customer Two', '1234', 'two@customer.com', '987654321', false);
+-- src/main/resources/data.sql
+INSERT INTO customer (id, name, password, email, phone, role, archived) VALUES
+('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Customer One', '1234', 'one@customer.com', '123456789', 'ADMIN', false),
+('2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', 'Customer Two', '1234', 'two@customer.com', '987654321', 'LIBRARIAN', false);
 
 -- Insert Publishers
 INSERT INTO publisher (id, name, archived) VALUES

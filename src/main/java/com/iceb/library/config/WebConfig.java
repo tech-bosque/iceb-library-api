@@ -9,11 +9,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Permite CORS em todas as rotas
-                .allowedOrigins("http://localhost:5173") // Substitua por sua URL local, "*" para permitir todas as origens
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
-                .allowedHeaders("*") // Cabeçalhos permitidos
-                .allowCredentials(true) // Se você envia cookies ou credenciais de autenticação
-                .maxAge(3600); // Tempo máximo que a resposta pode ser cacheada pelo navegador
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }
