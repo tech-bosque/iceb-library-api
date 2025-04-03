@@ -1,13 +1,12 @@
 package com.iceb.library.controller;
 
+import com.iceb.library.dto.RolesResponseDto;
 import com.iceb.library.service.RolesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -19,8 +18,8 @@ public class RolesController {
 
     @GetMapping
     @Operation(summary = "Get all roles")
-    public ResponseEntity<List<String>> listRoles() {
-        List<String> roles = rolesService.listRoles();
+    public ResponseEntity<RolesResponseDto> getRoles() {
+        RolesResponseDto roles = rolesService.getRoles();
         return ResponseEntity.ok(roles);
     }
 }

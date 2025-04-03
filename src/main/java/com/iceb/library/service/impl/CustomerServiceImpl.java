@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .phone(customerRequestDto.getPhone())
                 .email(customerRequestDto.getEmail())
                 .password(customerRequestDto.getPassword())
-                .roles(customerRequestDto.getRoles())
+                .role(customerRequestDto.getRole())
                 .archived(false)
                 .build();
         Customer savedCustomer = customerRepository.save(customer);
@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         existingCustomer.setName(customerRequestDto.getName());
         existingCustomer.setEmail(customerRequestDto.getEmail());
         existingCustomer.setPhone(customerRequestDto.getPhone());
-        existingCustomer.setRoles(customerRequestDto.getRoles());
+        existingCustomer.setRole(customerRequestDto.getRole());
 
         Customer updatedCustomer = customerRepository.save(existingCustomer);
 
@@ -122,7 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .name(customer.getName())
                 .email(customer.getEmail())
                 .phone(customer.getPhone())
-                .roles(customer.getRoles())
+                .role(customer.getRole())
                 .archived(customer.getArchived())
                 .build();
     }

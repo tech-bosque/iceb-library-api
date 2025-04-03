@@ -1,7 +1,7 @@
 package com.iceb.library.service;
 
-import java.util.List;
+import com.iceb.library.dto.RolesResponseDto;
 
 public interface RolesService {
-    List<String> listRoles();
+    RolesResponseDto getRoles();
 }
