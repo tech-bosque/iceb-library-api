@@ -11,10 +11,16 @@ import java.util.UUID;
 
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
-    @Query("SELECT c FROM Customer c " +
-            "WHERE (:#{#params.name} IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :#{#params.name}, '%'))) " +
-            "AND (:#{#params.email} IS NULL OR LOWER(c.email) LIKE LOWER(CONCAT('%', :#{#params.email}, '%'))) " +
-            "AND (:#{#params.phone} IS NULL OR LOWER(c.phone) LIKE LOWER(CONCAT('%', :#{#params.phone}, '%'))) " +
-            "AND (:#{#params.archived} IS NULL OR :#{#params.archived} = TRUE OR c.archived = :#{#params.archived})")
+    @Query("""
+        SELECT c FROM Customer c
+        WHERE (
+            :#{#params.search} IS NULL
+            OR LOWER(c.name) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(c.email) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(c.phone) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+        )
+        AND (:#{#params.rules} IS EMPTY OR c.rule IN :#(#params.rules)
+        AND (:#{#params.archived} IS NULL OR :#{#params.archived} = TRUE OR c.archived = :#{#params.archived})
+    """)
     List<Customer> searchCustomers(@Param("params") CustomerSearchDto params);
 }

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Created publisher successfully");
         logger.debug("Created publisher: {}", savedPublisher);
 
-        return mapToResponseDto(savedPublisher);
+        return mapToResponseDto(savedPublisher, Arrays.asList(false));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.debug("Fetching publisher with ID: {}", id);
 
         Publisher publisher = findPublisherById(id);
-        PublisherResponseDto responseDto = mapToResponseDto(publisher);
+        PublisherResponseDto responseDto = mapToResponseDto(publisher, Arrays.asList(false));
 
         logger.debug("Fetched publisher: {}", responseDto);
         logger.info("Fetched publisher by ID successfully");
@@ -54,7 +55,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<PublisherResponseDto> searchPublishers(String name, boolean archived) {
+    public List<PublisherResponseDto> searchPublishers(String name, List<Boolean> archived) {
         logger.info("Fetching publishers by name containing");
         logger.debug("Fetching publishers with name containing: {}", name);
 
@@ -66,7 +67,7 @@ public class PublisherServiceImpl implements PublisherService {
         }
 
         List<PublisherResponseDto> responseDtos = publishers.stream()
-                .map(this::mapToResponseDto)
+                .map(publisher -> mapToResponseDto(publisher, archived))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched publishers: {}", responseDtos);
@@ -86,7 +87,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Updated publisher successfully");
         logger.debug("Updated publisher: {}", updatedPublisher);
 
-        return mapToResponseDto(updatedPublisher);
+        return mapToResponseDto(updatedPublisher, Arrays.asList(false));
     }
 
     @Override
@@ -101,7 +102,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Archived publisher successfully");
         logger.debug("Archived publisher with ID: {}", id);
 
-        return mapToResponseDto(archivedPublisher);
+        return mapToResponseDto(archivedPublisher, Arrays.asList(false));
     }
 
     private Publisher findPublisherById(UUID id) {
@@ -112,11 +113,15 @@ public class PublisherServiceImpl implements PublisherService {
                 .orElseThrow(() -> new PublisherNotFoundException("The publisher with the provided ID does not exist"));
     }
 
-    private PublisherResponseDto mapToResponseDto(Publisher publisher) {
-        return PublisherResponseDto.builder()
+    private PublisherResponseDto mapToResponseDto(Publisher publisher, List<Boolean> archived) {
+        PublisherResponseDto.PublisherResponseDtoBuilder builder = PublisherResponseDto.builder()
                 .id(publisher.getId())
-                .name(publisher.getName())
-                .archived(publisher.getArchived())
-                .build();
+                .name(publisher.getName());
+
+        if (archived.contains(true)) {
+            builder.archived(publisher.getArchived());
+        }
+
+        return builder.build();
     }
 }

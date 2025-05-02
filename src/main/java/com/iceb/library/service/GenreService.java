@@ -10,7 +10,7 @@ public interface GenreService {
 
     GenreResponseDto createGenre(GenreRequestDto genreRequestDto);
     GenreResponseDto getGenreById(UUID id);
-    List<GenreResponseDto> searchGenres(String name, boolean archived);
+    List<GenreResponseDto> searchGenres(String name, List<Boolean> archived);
     GenreResponseDto updateGenre(UUID id, GenreRequestDto genreRequestDto);
     GenreResponseDto deleteGenre(UUID id);
 }

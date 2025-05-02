@@ -3,6 +3,7 @@ package com.iceb.library.service.impl;
 import com.iceb.library.dto.BookRequestDto;
 import com.iceb.library.dto.BookResponseDto;
 import com.iceb.library.dto.BookSearchDto;
+import com.iceb.library.dto.GenreResponseDto;
 import com.iceb.library.entity.Book;
 import com.iceb.library.exception.BookNotFoundException;
 import com.iceb.library.repository.BookRepository;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,9 +26,6 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
-
-    @Autowired
-    private AuthorService authorService;
 
     @Override
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
@@ -55,7 +54,7 @@ public class BookServiceImpl implements BookService {
         logger.info("Created book successfully");
         logger.debug("Created book: {}", savedBook);
 
-        return mapToResponseDto(savedBook);
+        return mapToResponseDto(savedBook, Arrays.asList(false));
     }
 
     @Override
@@ -64,7 +63,7 @@ public class BookServiceImpl implements BookService {
         logger.debug("Fetching book with ID: {}", id);
 
         Book book = findBookById(id);
-        BookResponseDto responseDto = mapToResponseDto(book);
+        BookResponseDto responseDto = mapToResponseDto(book, Arrays.asList(false));
 
         logger.debug("Fetched book: {}", responseDto);
         logger.info("Fetched book by ID successfully");
@@ -79,7 +78,7 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.searchBooks(bookSearchDto);
 
         List<BookResponseDto> responseDtos = books.stream()
-                .map(this::mapToResponseDto)
+                .map(book -> mapToResponseDto(book, bookSearchDto.getArchived()))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched books: {}", responseDtos);
@@ -99,7 +98,7 @@ public class BookServiceImpl implements BookService {
         logger.info("Updated book successfully");
         logger.debug("Updated book: {}", updatedBook);
 
-        return mapToResponseDto(updatedBook);
+        return mapToResponseDto(updatedBook, Arrays.asList(false));
     }
 
     @Override
@@ -114,7 +113,7 @@ public class BookServiceImpl implements BookService {
         logger.info("Archived book successfully");
         logger.debug("Archived book with ID: {}", id);
 
-        return mapToResponseDto(archivedBook);
+        return mapToResponseDto(archivedBook, Arrays.asList(false));
     }
 
     private Book findBookById(UUID id) {
@@ -125,8 +124,8 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new BookNotFoundException("The book with the provided ID does not exist"));
     }
 
-    private BookResponseDto mapToResponseDto(Book book) {
-        return BookResponseDto.builder()
+    private BookResponseDto mapToResponseDto(Book book,  List<Boolean> archived) {
+        BookResponseDto.BookResponseDtoBuilder builder = BookResponseDto.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .edition(book.getEdition())
@@ -138,11 +137,15 @@ public class BookServiceImpl implements BookService {
                 .assetNumber(book.getAssetNumber())
                 .isbn(book.getIsbn())
                 .urlCover(book.getUrlCover())
-                .archived(book.getArchived())
                 .publisher(book.getPublisher())
                 .authors(book.getAuthors())
                 .genres(book.getGenres())
-                .topics(book.getTopics())
-                .build();
+                .topics(book.getTopics());
+        
+        if (archived.contains(true)) {
+            builder.archived(book.getArchived());
+        }
+
+        return builder.build();
     }
 }

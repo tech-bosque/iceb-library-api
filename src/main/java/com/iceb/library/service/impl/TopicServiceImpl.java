@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,7 +39,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Created topic successfully");
         logger.debug("Created topic: {}", savedTopic);
 
-        return mapToResponseDto(savedTopic);
+        return mapToResponseDto(savedTopic, Arrays.asList(false));
     }
 
     @Override
@@ -46,7 +48,7 @@ public class TopicServiceImpl implements TopicService {
         logger.debug("Fetching topic with ID: {}", id);
 
         Topic topic = findTopicById(id);
-        TopicResponseDto responseDto = mapToResponseDto(topic);
+        TopicResponseDto responseDto = mapToResponseDto(topic, Arrays.asList(false));
 
         logger.debug("Fetched topic: {}", responseDto);
         logger.info("Fetched topic by ID successfully");
@@ -54,7 +56,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<TopicResponseDto> searchTopics(String name, boolean archived) {
+    public List<TopicResponseDto> searchTopics(String name, List<Boolean> archived) {
         logger.info("Fetching topics by name containing");
         logger.debug("Fetching topics with name containing: {}", name);
 
@@ -66,7 +68,7 @@ public class TopicServiceImpl implements TopicService {
         }
 
         List<TopicResponseDto> responseDtos = topics.stream()
-                .map(this::mapToResponseDto)
+                .map(topic -> mapToResponseDto(topic, archived))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched topics: {}", responseDtos);
@@ -86,7 +88,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Updated topic successfully");
         logger.debug("Updated topic: {}", updatedTopic);
 
-        return mapToResponseDto(updatedTopic);
+        return mapToResponseDto(updatedTopic, Arrays.asList(false));
     }
 
     @Override
@@ -101,7 +103,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Archived topic successfully");
         logger.debug("Archived topic with ID: {}", id);
 
-        return mapToResponseDto(archivedTopic);
+        return mapToResponseDto(archivedTopic, Arrays.asList(false));
     }
 
     private Topic findTopicById(UUID id) {
@@ -112,11 +114,15 @@ public class TopicServiceImpl implements TopicService {
                 .orElseThrow(() -> new TopicNotFoundException("The topic with the provided ID does not exist"));
     }
 
-    private TopicResponseDto mapToResponseDto(Topic topic) {
-        return TopicResponseDto.builder()
+    private TopicResponseDto mapToResponseDto(Topic topic, List<Boolean> archived) {
+        TopicResponseDto.TopicResponseDtoBuilder builder = TopicResponseDto.builder()
                 .id(topic.getId())
-                .name(topic.getName())
-                .archived(topic.getArchived())
-                .build();
+                .name(topic.getName());
+
+        if (archived.contains(true)) {
+            builder.archived(topic.getArchived());
+        }
+
+        return builder.build();
     }
 }

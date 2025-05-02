@@ -1,5 +1,7 @@
 package com.iceb.library.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,34 +13,22 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookSearchDto {
 
-    private String name;
+    private String search;
 
-    private String author;
+    private List<String> author;
 
-    private String publisher;
+    private List<String> publisher;
 
-    private String genre;
+    private List<String> genre;
 
-    private String topic;
+    private List<String> topic;
 
-    private String edition;
-
-    private String language;
+    private List<String> language;
 
     private Integer year;
 
-    private Integer pages;
-
-    private String observation;
-
     private Boolean donation;
 
-    private String assetNumber;
-
-    private String isbn;
-
-    private String urlCover;
-
-    private Boolean archived;
+    private List<Boolean> archived;
 
 }

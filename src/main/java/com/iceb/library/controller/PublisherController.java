@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/publisher")
@@ -38,7 +40,15 @@ public class PublisherController {
 
     @GetMapping
     @Operation(summary = "Get all publishers or search by name")
-    public ResponseEntity<List<PublisherResponseDto>> searchPublisher(@RequestParam(required = false) String name, @RequestParam(defaultValue = "false") boolean archived) {
+    public ResponseEntity<List<PublisherResponseDto>> searchPublisher(
+        @RequestParam(required = false) String name,
+        @RequestParam(defaultValue = "false") String archivedStr
+    ) {
+        
+        List<Boolean> archived = Arrays.stream(archivedStr.split(","))
+                                .map(Boolean::parseBoolean)
+                                .collect(Collectors.toList());
+        
         List<PublisherResponseDto> publishers = publisherService.searchPublishers(name, archived);
         return ResponseEntity.ok(publishers);
     }

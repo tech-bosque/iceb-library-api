@@ -10,7 +10,7 @@ public interface AuthorService {
 
     AuthorResponseDto createAuthor(AuthorRequestDto authorRequestDto);
     AuthorResponseDto getAuthorById(UUID id);
-    List<AuthorResponseDto> searchAuthors(String name, boolean archived);
+    List<AuthorResponseDto> searchAuthors(String name, List<Boolean> archived);
     AuthorResponseDto updateAuthor(UUID id, AuthorRequestDto authorRequestDto);
     AuthorResponseDto deleteAuthor(UUID id);
 }

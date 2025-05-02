@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Created customer successfully");
         logger.debug("Created customer: {}", savedCustomer);
 
-        return mapToResponseDto(savedCustomer);
+        return mapToResponseDto(savedCustomer, Arrays.asList(false));
     }
 
     @Override
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.debug("Fetching customer with ID: {}", id);
 
         Customer customer = findCustomerById(id);
-        CustomerResponseDto responseDto = mapToResponseDto(customer);
+        CustomerResponseDto responseDto = mapToResponseDto(customer, Arrays.asList(false));
 
         logger.debug("Fetched customer: {}", responseDto);
         logger.info("Fetched customer by ID successfully");
@@ -74,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Updated customer successfully");
         logger.debug("Updated customer: {}", updatedCustomer);
 
-        return mapToResponseDto(updatedCustomer);
+        return mapToResponseDto(updatedCustomer, Arrays.asList(false));
     }
 
     @Override
@@ -89,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Archived customer successfully");
         logger.debug("Archived customer with ID: {}", id);
 
-        return mapToResponseDto(archivedCustomer);
+        return mapToResponseDto(archivedCustomer, Arrays.asList(false));
     }
 
     @Override
@@ -100,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerRepository.searchCustomers(customerSearchDto);
 
         List<CustomerResponseDto> responseDtos = customers.stream()
-                .map(this::mapToResponseDto)
+                .map(customer -> mapToResponseDto(customer, customerSearchDto.getArchived()))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched customers: {}", responseDtos);
@@ -116,14 +117,18 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new CustomerNotFoundException("The customer with the provided ID does not exist"));
     }
 
-    private CustomerResponseDto mapToResponseDto(Customer customer) {
-        return CustomerResponseDto.builder()
+    private CustomerResponseDto mapToResponseDto(Customer customer, List<Boolean> archived) {
+        CustomerResponseDto.CustomerResponseDtoBuilder builder = CustomerResponseDto.builder()
                 .id(customer.getId())
                 .name(customer.getName())
                 .email(customer.getEmail())
                 .phone(customer.getPhone())
-                .role(customer.getRole())
-                .archived(customer.getArchived())
-                .build();
+                .role(customer.getRole());
+
+        if (archived.contains(true)) {
+            builder.archived(customer.getArchived());
+        }
+
+        return builder.build();
     }
 }
