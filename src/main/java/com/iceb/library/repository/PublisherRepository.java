@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface PublisherRepository extends JpaRepository<Publisher, UUID> {
 
-    @Query("SELECT p FROM Publisher p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) AND (:archived = true OR p.archived = :archived)")
-    List<Publisher> findSimilarNames(@Param("name") String name, @Param("archived") boolean archived);
+    @Query("SELECT p FROM Publisher p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) AND p.archived IN :archived")
+    List<Publisher> findSimilarNames(@Param("name") String name, @Param("archived") List<Boolean> archived);
 
-    @Query("SELECT p FROM Publisher p WHERE :archived = true OR p.archived = :archived")
-    List<Publisher> findAllPublisher(@Param("archived") boolean archived);
+    @Query("SELECT p FROM Publisher p WHERE p.archived IN :archived")
+    List<Publisher> findAllPublisher(@Param("archived") List<Boolean> archived);
 }

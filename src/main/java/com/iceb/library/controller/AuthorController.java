@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/author")
@@ -37,7 +39,15 @@ public class AuthorController {
 
     @GetMapping
     @Operation(summary = "Get all authors or search by name")
-    public ResponseEntity<List<AuthorResponseDto>> searchAuthors(@RequestParam(required = false) String name, @RequestParam(defaultValue = "false") boolean archived) {
+    public ResponseEntity<List<AuthorResponseDto>> searchAuthors(
+        @RequestParam(required = false) String name,
+        @RequestParam(defaultValue = "false") String archivedStr
+    ) {
+
+        List<Boolean> archived = Arrays.stream(archivedStr.split(","))
+                                       .map(Boolean::parseBoolean)
+                                       .collect(Collectors.toList());
+
         List<AuthorResponseDto> authors = authorService.searchAuthors(name, archived);
         return ResponseEntity.ok(authors);
     }

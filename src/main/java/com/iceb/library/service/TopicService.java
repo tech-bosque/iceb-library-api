@@ -10,7 +10,7 @@ public interface TopicService {
 
     TopicResponseDto createTopic(TopicRequestDto topicRequestDto);
     TopicResponseDto getTopicById(UUID id);
-    List<TopicResponseDto> searchTopics(String name, boolean archived);
+    List<TopicResponseDto> searchTopics(String name, List<Boolean> archived);
     TopicResponseDto updateTopic(UUID id, TopicRequestDto topicRequestDto);
     TopicResponseDto deleteTopic(UUID id);
 }

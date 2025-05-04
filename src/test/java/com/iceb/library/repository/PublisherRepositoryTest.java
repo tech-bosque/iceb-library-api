@@ -4,6 +4,7 @@ import com.iceb.library.entity.Publisher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class PublisherRepositoryTest extends TestRepositoryHelper{
 
         publisherRepository.save(secondPublisher);
 
-        List<Publisher> savedPublishers = publisherRepository.findAllPublisher(false);
+        List<Publisher> savedPublishers = publisherRepository.findAllPublisher(Arrays.asList(false));
         Assertions.assertNotNull(savedPublishers);
         Assertions.assertFalse(savedPublishers.isEmpty());
         Assertions.assertEquals(2, savedPublishers.size());
@@ -35,7 +36,7 @@ public class PublisherRepositoryTest extends TestRepositoryHelper{
 
     @Test
     void findSimilarNamesTest() {
-        List<Publisher> savedPublishers = publisherRepository.findSimilarNames(publisherTest.getName(), false);
+        List<Publisher> savedPublishers = publisherRepository.findSimilarNames(publisherTest.getName(), Arrays.asList(false));
         Assertions.assertNotNull(savedPublishers);
         Assertions.assertFalse(savedPublishers.isEmpty());
         Assertions.assertEquals(1, savedPublishers.size());

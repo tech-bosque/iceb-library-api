@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,16 +71,16 @@ public class GenreServiceImplTest {
     void searchGenresTest() {
         List<Genre> genres = List.of(TestUtils.genre(false), TestUtils.genre(true));
 
-        when(genreRepository.findAllGenres(false)).thenReturn(List.of(genres.get(0)));
+        when(genreRepository.findAllGenres(Arrays.asList(false))).thenReturn(List.of(genres.get(0)));
 
-        List<GenreResponseDto> genreResponseDtos = genreServiceImpl.searchGenres(null, false);
+        List<GenreResponseDto> genreResponseDtos = genreServiceImpl.searchGenres(null, Arrays.asList(false));
 
         Assertions.assertEquals(1, genreResponseDtos.size());
         Assertions.assertFalse(genres.get(0).getArchived());
 
-        when(genreRepository.findSimilarNames("Test Genre", true)).thenReturn(List.of(genres.get(1)));
+        when(genreRepository.findSimilarNames("Test Genre", Arrays.asList(true))).thenReturn(List.of(genres.get(1)));
 
-        List<GenreResponseDto> genreResponseDtos2 = genreServiceImpl.searchGenres("Test Genre", true);
+        List<GenreResponseDto> genreResponseDtos2 = genreServiceImpl.searchGenres("Test Genre", Arrays.asList(true));
 
         Assertions.assertEquals(1, genreResponseDtos2.size());
         Assertions.assertTrue(genres.get(1).getArchived());

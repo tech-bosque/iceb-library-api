@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,16 +71,16 @@ public class TopicServiceImplTest {
     void searchTopicsTest() {
         List<Topic> topics = List.of(TestUtils.topic(false), TestUtils.topic(true));
 
-        when(topicRepository.findAllTopics(false)).thenReturn(List.of(topics.get(0)));
+        when(topicRepository.findAllTopics(Arrays.asList(false))).thenReturn(List.of(topics.get(0)));
 
-        List<TopicResponseDto> topicResponseDtos = topicServiceImpl.searchTopics(null, false);
+        List<TopicResponseDto> topicResponseDtos = topicServiceImpl.searchTopics(null, Arrays.asList(false));
 
         Assertions.assertEquals(1, topicResponseDtos.size());
         Assertions.assertFalse(topics.get(0).getArchived());
 
-        when(topicRepository.findSimilarNames("Test Topic", true)).thenReturn(List.of(topics.get(1)));
+        when(topicRepository.findSimilarNames("Test Topic", Arrays.asList(true))).thenReturn(List.of(topics.get(1)));
 
-        List<TopicResponseDto> topicResponseDtos2 = topicServiceImpl.searchTopics("Test Topic", true);
+        List<TopicResponseDto> topicResponseDtos2 = topicServiceImpl.searchTopics("Test Topic", Arrays.asList(true));
 
         Assertions.assertEquals(1, topicResponseDtos2.size());
         Assertions.assertTrue(topics.get(1).getArchived());

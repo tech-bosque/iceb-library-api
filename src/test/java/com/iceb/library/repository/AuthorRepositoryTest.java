@@ -4,6 +4,7 @@ import com.iceb.library.entity.Author;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class AuthorRepositoryTest extends TestRepositoryHelper{
 
         authorRepository.save(secondAuthor);
 
-        List<Author> savedAuthors = authorRepository.findAllAuthors(false);
+        List<Author> savedAuthors = authorRepository.findAllAuthors(Arrays.asList(false));
         Assertions.assertNotNull(savedAuthors);
         Assertions.assertFalse(savedAuthors.isEmpty());
         Assertions.assertEquals(2, savedAuthors.size());
@@ -35,7 +36,7 @@ public class AuthorRepositoryTest extends TestRepositoryHelper{
 
     @Test
     void findSimilarNamesTest() {
-        List<Author> savedAuthors = authorRepository.findSimilarNames(authorTest.getName(), false);
+        List<Author> savedAuthors = authorRepository.findSimilarNames(authorTest.getName(), Arrays.asList(false));
         Assertions.assertNotNull(savedAuthors);
         Assertions.assertFalse(savedAuthors.isEmpty());
         Assertions.assertEquals(1, savedAuthors.size());

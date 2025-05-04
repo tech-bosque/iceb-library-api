@@ -43,37 +43,9 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
     }
 
     @Test
-    void searchCustomersByNameTest() {
+    void searchCustomersByTermTest() {
         CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
-                .name(customerTest.getName())
-                .build();
-
-        List<Customer> savedCustomers = customerRepository.searchCustomers(customerSearchDto);
-        Assertions.assertNotNull(savedCustomers);
-        Assertions.assertFalse(savedCustomers.isEmpty());
-
-        Customer savedCustomer = savedCustomers.getFirst();
-        assertThat(savedCustomer).usingRecursiveComparison().isEqualTo(customerTest);
-    }
-
-    @Test
-    void searchCustomersByEmailTest() {
-        CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
-                .email(customerTest.getEmail())
-                .build();
-
-        List<Customer> savedCustomers = customerRepository.searchCustomers(customerSearchDto);
-        Assertions.assertNotNull(savedCustomers);
-        Assertions.assertFalse(savedCustomers.isEmpty());
-
-        Customer savedCustomer = savedCustomers.getFirst();
-        assertThat(savedCustomer).usingRecursiveComparison().isEqualTo(customerTest);
-    }
-
-    @Test
-    void searchCustomersByPhoneTest() {
-        CustomerSearchDto customerSearchDto = CustomerSearchDto.builder()
-                .phone(customerTest.getPhone())
+                .search("Test term")
                 .build();
 
         List<Customer> savedCustomers = customerRepository.searchCustomers(customerSearchDto);

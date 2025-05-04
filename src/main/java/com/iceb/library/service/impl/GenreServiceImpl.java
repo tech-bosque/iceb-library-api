@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Created genre successfully");
         logger.debug("Created genre: {}", savedGenre);
 
-        return mapToResponseDto(savedGenre);
+        return mapToResponseDto(savedGenre, Arrays.asList(false));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GenreServiceImpl implements GenreService {
         logger.debug("Fetching genre with ID: {}", id);
 
         Genre genre = findGenreById(id);
-        GenreResponseDto responseDto = mapToResponseDto(genre);
+        GenreResponseDto responseDto = mapToResponseDto(genre, Arrays.asList(false));
 
         logger.debug("Fetched genre: {}", responseDto);
         logger.info("Fetched genre by ID successfully");
@@ -54,7 +55,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<GenreResponseDto> searchGenres(String name, boolean archived) {
+    public List<GenreResponseDto> searchGenres(String name, List<Boolean> archived) {
         logger.info("Fetching genres by name containing");
         logger.debug("Fetching genres with name containing: {}", name);
 
@@ -66,7 +67,7 @@ public class GenreServiceImpl implements GenreService {
         }
 
         List<GenreResponseDto> responseDtos = genres.stream()
-                .map(this::mapToResponseDto)
+                .map(genre -> mapToResponseDto(genre, archived))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched genres: {}", responseDtos);
@@ -86,7 +87,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Updated genre successfully");
         logger.debug("Updated genre: {}", updatedGenre);
 
-        return mapToResponseDto(updatedGenre);
+        return mapToResponseDto(updatedGenre, Arrays.asList(false));
     }
 
     @Override
@@ -101,7 +102,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Archived genre successfully");
         logger.debug("Archived genre with ID: {}", id);
 
-        return mapToResponseDto(archivedGenre);
+        return mapToResponseDto(archivedGenre, Arrays.asList(false));
     }
 
     private Genre findGenreById(UUID id) {
@@ -112,11 +113,15 @@ public class GenreServiceImpl implements GenreService {
                 .orElseThrow(() -> new GenreNotFoundException("The genre with the provided ID does not exist"));
     }
 
-    private GenreResponseDto mapToResponseDto(Genre genre) {
-        return GenreResponseDto.builder()
+    private GenreResponseDto mapToResponseDto(Genre genre, List<Boolean> archived) {
+        GenreResponseDto.GenreResponseDtoBuilder builder = GenreResponseDto.builder()
                 .id(genre.getId())
-                .name(genre.getName())
-                .archived(genre.getArchived())
-                .build();
+                .name(genre.getName());
+
+        if (archived.contains(true)) {
+            builder.archived(genre.getArchived());
+        }
+
+        return builder.build();
     }
 }

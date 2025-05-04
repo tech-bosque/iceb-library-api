@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Arrays;
 
 
 public class BookRepositoryTest extends TestRepositoryHelper{
@@ -48,37 +49,9 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByNameTest() {
+    void searchBooksByTermTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .name(bookTest.getName())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByAuthorTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .author(bookTest.getAuthors().getFirst().getName())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByPublisherTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .publisher(bookTest.getPublisher().getName())
+                .search("Test term")
                 .build();
 
         List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
@@ -92,7 +65,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     @Test
     void searchBooksByGenreTest(){
         BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .genre(bookTest.getGenres().getFirst().getName())
+                .genre(Arrays.asList(bookTest.getGenres().getFirst().getName()))
                 .build();
 
         List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
@@ -106,21 +79,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     @Test
     void searchBooksByTopicTest(){
         BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .topic(bookTest.getTopics().getFirst().getName())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByEditionTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .edition(bookTest.getEdition())
+                .topic(Arrays.asList(bookTest.getTopics().getFirst().getName()))
                 .build();
 
         List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
@@ -134,7 +93,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     @Test
     void searchBooksByLanguageTest(){
         BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .language(bookTest.getLanguage())
+                .language(Arrays.asList(bookTest.getLanguage()))
                 .build();
 
         List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
@@ -160,34 +119,6 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByPagesTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .pages(bookTest.getPages())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByObservationTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .observation(bookTest.getObservation())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
     void searchBooksByDonationTest(){
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .donation(bookTest.getDonation())
@@ -200,48 +131,5 @@ public class BookRepositoryTest extends TestRepositoryHelper{
         Book savedBook = savedBooks.getFirst();
         assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
     }
-
-    @Test
-    void searchBooksByAssetNumberTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .assetNumber(bookTest.getAssetNumber())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByIsbnTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .isbn(bookTest.getIsbn())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
-    @Test
-    void searchBooksByUrlCoverTest(){
-        BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .urlCover(bookTest.getUrlCover())
-                .build();
-
-        List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
-        Assertions.assertNotNull(savedBooks);
-        Assertions.assertFalse(savedBooks.isEmpty());
-
-        Book savedBook = savedBooks.getFirst();
-        assertThat(savedBook).usingRecursiveComparison().isEqualTo(bookTest);
-    }
-
 
 }

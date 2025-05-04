@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface TopicRepository extends JpaRepository<Topic, UUID> {
 
-    @Query("SELECT t FROM Topic t WHERE LOWER(t.name) LIKE LOWER(CONCAT('%', :name, '%')) AND (:archived = true OR t.archived = :archived)")
-    List<Topic> findSimilarNames(@Param("name") String name, @Param("archived") boolean archived);
+    @Query("SELECT t FROM Topic t WHERE LOWER(t.name) LIKE LOWER(CONCAT('%', :name, '%')) AND t.archived IN :archived")
+    List<Topic> findSimilarNames(@Param("name") String name, @Param("archived") List<Boolean> archived);
 
-    @Query("SELECT t FROM Topic t WHERE :archived = true OR t.archived = :archived")
-    List<Topic> findAllTopics(@Param("archived") boolean archived);
+    @Query("SELECT t FROM Topic t WHERE t.archived IN :archived")
+    List<Topic> findAllTopics(@Param("archived") List<Boolean> archived);
 }

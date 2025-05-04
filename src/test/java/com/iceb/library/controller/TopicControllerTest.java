@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class TopicControllerTest {
 
         List<TopicResponseDto> topicResponseDtos = List.of(TestUtils.topicResponseDto(false));
 
-        when(topicService.searchTopics(any(String.class), any(Boolean.class))).thenReturn(topicResponseDtos);
+        when(topicService.searchTopics(any(String.class), Arrays.asList(any(Boolean.class)))).thenReturn(topicResponseDtos);
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/topic")
                         .param("name", "Test Topic")

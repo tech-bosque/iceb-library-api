@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Created author successfully");
         logger.debug("Created author: {}", savedAuthor);
 
-        return mapToResponseDto(savedAuthor);
+        return mapToResponseDto(savedAuthor, Arrays.asList(false));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.debug("Fetching author with ID: {}", id);
 
         Author author = findAuthorById(id);
-        AuthorResponseDto responseDto = mapToResponseDto(author);
+        AuthorResponseDto responseDto = mapToResponseDto(author, Arrays.asList(false));
 
         logger.debug("Fetched author: {}", responseDto);
         logger.info("Fetched author by ID successfully");
@@ -54,7 +55,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorResponseDto> searchAuthors(String name, boolean archived) {
+    public List<AuthorResponseDto> searchAuthors(String name, List<Boolean> archived) {
         logger.info("Fetching authors by name containing");
         logger.debug("Fetching authors with name containing: {}", name);
 
@@ -66,7 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
         }
 
         List<AuthorResponseDto> responseDtos = authors.stream()
-                .map(this::mapToResponseDto)
+                .map(author -> mapToResponseDto(author, archived))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched authors: {}", responseDtos);
@@ -86,7 +87,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Updated author successfully");
         logger.debug("Updated author: {}", updatedAuthor);
 
-        return mapToResponseDto(updatedAuthor);
+        return mapToResponseDto(updatedAuthor, Arrays.asList(false));
     }
 
     @Override
@@ -101,7 +102,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Archived author successfully");
         logger.debug("Archived author with ID: {}", id);
 
-        return mapToResponseDto(archivedAuthor);
+        return mapToResponseDto(archivedAuthor, Arrays.asList(false));
     }
 
     private Author findAuthorById(UUID id) {
@@ -112,11 +113,15 @@ public class AuthorServiceImpl implements AuthorService {
                 .orElseThrow(() -> new AuthorNotFoundException("The author with the provided ID does not exist"));
     }
 
-    private AuthorResponseDto mapToResponseDto(Author author) {
-        return AuthorResponseDto.builder()
+    private AuthorResponseDto mapToResponseDto(Author author, List<Boolean> archived) {
+        AuthorResponseDto.AuthorResponseDtoBuilder builder = AuthorResponseDto.builder()
                 .id(author.getId())
-                .name(author.getName())
-                .archived(author.getArchived())
-                .build();
+                .name(author.getName());
+        
+        if (archived.contains(true)) {
+            builder.archived(author.getArchived());
+        }
+
+        return builder.build();
     }
 }

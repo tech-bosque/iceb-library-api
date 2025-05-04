@@ -1,5 +1,7 @@
 package com.iceb.library.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CustomerSearchDto {
 
-    private String name;
-
-    private String email;
-
-    private String phone;
+    private String search;
 
     private String role;
 
-    private Boolean archived;
-
+    private List<Boolean> archived;
 }

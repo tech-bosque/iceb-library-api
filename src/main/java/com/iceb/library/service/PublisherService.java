@@ -9,7 +9,7 @@ public interface PublisherService {
 
     PublisherResponseDto createPublisher(PublisherRequestDto publisherRequestDto);
     PublisherResponseDto getPublisherById(UUID id);
-    List<PublisherResponseDto> searchPublishers(String name, boolean archived);
+    List<PublisherResponseDto> searchPublishers(String name, List<Boolean> archived);
     PublisherResponseDto updatePublisher(UUID id, PublisherRequestDto publisherRequestDto);
     PublisherResponseDto deletePublisher(UUID id);
 }
