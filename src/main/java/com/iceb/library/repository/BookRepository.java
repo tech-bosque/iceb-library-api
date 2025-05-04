@@ -19,9 +19,11 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
         LEFT JOIN b.topics t
         WHERE (
             :#{#params.search} IS NULL
-            OR LOWER(b.name) LIKE LOWER(CONCAT('%', :#{#params.name}, '%'))
-            OR LOWER(a.name) LIKE LOWER(CONCAT('%', :#{#params.author}, '%'))
-            OR LOWER(p.name) LIKE LOWER(CONCAT('%', :#{#params.publisher}, '%'))
+            OR LOWER(b.name) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(a.name) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(p.name) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(b.isbn) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
+            OR LOWER(b.assetNumber) LIKE LOWER(CONCAT('%', :#{params.search}, '%'))
         )
         AND (:#{#params.authors} IS EMPTY OR a.id IN :#{#params.authors})
         AND (:#{#params.publisher} IS EMPTY OR p.id IN :#{#params.publisher})
@@ -30,7 +32,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
         AND (:#{#params.language} IS EMPTY OR b.language IN :#{#params.language})
         AND (:#{#params.year} IS NULL OR b.year = :#{#params.year})
         AND (:#{#params.donation} IS NULL OR b.donation = :#{#params.donation})
-        AND (:#{#params.archived} IS NULL OR :#{#params.archived} = TRUE OR b.archived = :#{#params.archived})
+        AND (:#{#params.archived} IS EMPTY OR b.archived IN :#{#params.archived})
     """)
     List<Book> searchBooks(@Param("params") BookSearchDto params);
 }

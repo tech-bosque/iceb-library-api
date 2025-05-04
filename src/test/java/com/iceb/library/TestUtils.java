@@ -178,21 +178,12 @@ public class TestUtils {
 
     public static BookSearchDto bookSearchDto() {
         return BookSearchDto.builder()
-                .name("Test Book")
-                .author("Test Author")
-                .publisher("Test Publisher")
-                .genre("Test Genre")
-                .topic("Test Topic")
-                .edition("Test Edition")
-                .language("Test Language")
+                .search("Test Book")
+                .genre(Arrays.asList("Test Genre"))
+                .topic(Arrays.asList("Test Topic"))
+                .language(Arrays.asList("Test Language"))
                 .year(2023)
-                .pages(100)
-                .observation("Test Observation")
                 .donation(true)
-                .assetNumber("12345")
-                .isbn("123-4567890123")
-                .urlCover("http://testcover.com")
-                .archived(false)
                 .build();
     }
 
@@ -231,11 +222,8 @@ public class TestUtils {
 
     public static CustomerSearchDto customerSearchDto() {
         return CustomerSearchDto.builder()
-                .name("Test Customer")
-                .email("test@test.com")
-                .phone("1234567890")
+                .search("Test Customer")
                 .role(Arrays.asList(Role.LIBRARIAN).toString())
-                .archived(false)
                 .build();
     }
 

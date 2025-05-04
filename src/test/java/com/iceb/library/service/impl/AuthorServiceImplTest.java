@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,16 +71,16 @@ public class AuthorServiceImplTest {
     void searchAuthorsTest() {
         List<Author> authors = List.of(TestUtils.author(false), TestUtils.author(true));
 
-        when(authorRepository.findAllAuthors(false)).thenReturn(List.of(authors.get(0)));
+        when(authorRepository.findAllAuthors(Arrays.asList(false))).thenReturn(List.of(authors.get(0)));
 
-        List<AuthorResponseDto> authorResponseDtos = authorServiceImpl.searchAuthors(null, false);
+        List<AuthorResponseDto> authorResponseDtos = authorServiceImpl.searchAuthors(null, Arrays.asList(false));
 
         Assertions.assertEquals(1, authorResponseDtos.size());
         Assertions.assertFalse(authors.get(0).getArchived());
 
-        when(authorRepository.findSimilarNames("Test Author", true)).thenReturn(List.of(authors.get(1)));
+        when(authorRepository.findSimilarNames("Test Author", Arrays.asList(true))).thenReturn(List.of(authors.get(1)));
 
-        List<AuthorResponseDto> authorResponseDtos2 = authorServiceImpl.searchAuthors("Test Author", true);
+        List<AuthorResponseDto> authorResponseDtos2 = authorServiceImpl.searchAuthors("Test Author", Arrays.asList(true));
 
         Assertions.assertEquals(1, authorResponseDtos2.size());
         Assertions.assertTrue(authors.get(1).getArchived());

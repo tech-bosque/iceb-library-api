@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class AuthorControllerTest {
 
         List<AuthorResponseDto> authorResponseDtos = List.of(TestUtils.authorResponseDto(false));
 
-        when(authorService.searchAuthors(any(String.class), any(Boolean.class))).thenReturn(authorResponseDtos);
+        when(authorService.searchAuthors(any(String.class), Arrays.asList(any(Boolean.class)))).thenReturn(authorResponseDtos);
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/author")
                         .param("name", "Test Author")

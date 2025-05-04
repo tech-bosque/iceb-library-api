@@ -4,6 +4,7 @@ import com.iceb.library.entity.Genre;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +36,7 @@ public class GenreRepositoryTest extends TestRepositoryHelper{
 
     @Test
     void findSimilarNamesTest() {
-        List<Genre> savedGenres = genreRepository.findSimilarNames(genreTest.getName(), false);
+        List<Genre> savedGenres = genreRepository.findSimilarNames(genreTest.getName(), Arrays.asList(false));
         Assertions.assertNotNull(savedGenres);
         Assertions.assertFalse(savedGenres.isEmpty());
         Assertions.assertEquals(1, savedGenres.size());

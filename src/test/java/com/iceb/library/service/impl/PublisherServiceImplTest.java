@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,17 +71,17 @@ public class PublisherServiceImplTest {
     void searchPublishersTest() {
         List<Publisher> publishers = List.of(TestUtils.publisher(false), TestUtils.publisher(true));
 
-        when(publisherRepository.findAllPublisher(false)).thenReturn(List.of(publishers.getFirst()));
+        when(publisherRepository.findAllPublisher(Arrays.asList(false))).thenReturn(List.of(publishers.getFirst()));
 
-        List<PublisherResponseDto> publisherResponseDtos = publisherServiceImpl.searchPublishers(null, false);
+        List<PublisherResponseDto> publisherResponseDtos = publisherServiceImpl.searchPublishers(null, Arrays.asList(false));
 
         Assertions.assertEquals(1, publisherResponseDtos.size());
         Assertions.assertFalse(publishers.getFirst().getArchived());
 
 
-        when(publisherRepository.findSimilarNames("Test Publisher",true)).thenReturn(List.of(publishers.getLast()));
+        when(publisherRepository.findSimilarNames("Test Publisher", Arrays.asList(true))).thenReturn(List.of(publishers.getLast()));
 
-        List<PublisherResponseDto> publisherResponseDtos2 = publisherServiceImpl.searchPublishers("Test Publisher", true);
+        List<PublisherResponseDto> publisherResponseDtos2 = publisherServiceImpl.searchPublishers("Test Publisher", Arrays.asList(true));
 
         Assertions.assertEquals(1, publisherResponseDtos2.size());
         Assertions.assertTrue(publishers.getLast().getArchived());

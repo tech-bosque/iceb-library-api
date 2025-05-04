@@ -20,7 +20,7 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
             OR LOWER(c.phone) LIKE LOWER(CONCAT('%', :#{#params.search}, '%'))
         )
         AND (:#{#params.rules} IS EMPTY OR c.rule IN :#(#params.rules)
-        AND (:#{#params.archived} IS NULL OR :#{#params.archived} = TRUE OR c.archived = :#{#params.archived})
+        AND (:#{#params.archived} IS EMPTY OR c.archived IN :#{#params.archived})
     """)
     List<Customer> searchCustomers(@Param("params") CustomerSearchDto params);
 }

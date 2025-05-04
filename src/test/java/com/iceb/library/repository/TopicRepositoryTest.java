@@ -4,6 +4,7 @@ import com.iceb.library.entity.Topic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class TopicRepositoryTest extends TestRepositoryHelper{
 
         topicRepository.save(secondTopic);
 
-        List<Topic> savedTopics = topicRepository.findAllTopics(false);
+        List<Topic> savedTopics = topicRepository.findAllTopics(Arrays.asList(false));
         Assertions.assertNotNull(savedTopics);
         Assertions.assertFalse(savedTopics.isEmpty());
         Assertions.assertEquals(2, savedTopics.size());
@@ -35,7 +36,7 @@ public class TopicRepositoryTest extends TestRepositoryHelper{
 
     @Test
     void findSimilarNamesTest() {
-        List<Topic> savedTopics = topicRepository.findSimilarNames(topicTest.getName(), false);
+        List<Topic> savedTopics = topicRepository.findSimilarNames(topicTest.getName(), Arrays.asList(false));
         Assertions.assertNotNull(savedTopics);
         Assertions.assertFalse(savedTopics.isEmpty());
         Assertions.assertEquals(1, savedTopics.size());

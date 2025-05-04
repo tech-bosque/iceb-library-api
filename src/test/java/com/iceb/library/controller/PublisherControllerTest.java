@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,7 +83,7 @@ public class PublisherControllerTest {
 
         List<PublisherResponseDto> publisherResponseDtos = List.of(TestUtils.publisherResponseDto(false));
 
-        when(publisherService.searchPublishers(any(String.class), any(Boolean.class))).thenReturn(publisherResponseDtos);
+        when(publisherService.searchPublishers(any(String.class), Arrays.asList(any(Boolean.class)))).thenReturn(publisherResponseDtos);
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/publisher")
                         .param("name", "Test Publisher")

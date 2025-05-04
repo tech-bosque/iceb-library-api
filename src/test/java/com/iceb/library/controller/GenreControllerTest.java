@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class GenreControllerTest {
 
         List<GenreResponseDto> genreResponseDtos = List.of(TestUtils.genreResponseDto(false));
 
-        when(genreService.searchGenres(any(String.class), any(Boolean.class))).thenReturn(genreResponseDtos);
+        when(genreService.searchGenres(any(String.class), Arrays.asList(any(Boolean.class)))).thenReturn(genreResponseDtos);
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/genre")
                         .param("name", "Test Genre")
