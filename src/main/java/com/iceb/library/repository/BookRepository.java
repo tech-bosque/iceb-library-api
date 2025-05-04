@@ -17,9 +17,12 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
         LEFT JOIN b.publisher p
         LEFT JOIN b.genres g
         LEFT JOIN b.topics t
-        WHERE (:#{#params.search} IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%', :#{#params.name}, '%')))
-        OR (:#{#params.search} IS NULL OR LOWER(a.name) LIKE LOWER(CONCAT('%', :#{#params.author}, '%')))
-        OR (:#{#params.search} IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :#{#params.publisher}, '%')))
+        WHERE (
+            :#{#params.search} IS NULL
+            OR LOWER(b.name) LIKE LOWER(CONCAT('%', :#{#params.name}, '%'))
+            OR LOWER(a.name) LIKE LOWER(CONCAT('%', :#{#params.author}, '%'))
+            OR LOWER(p.name) LIKE LOWER(CONCAT('%', :#{#params.publisher}, '%'))
+        )
         AND (:#{#params.authors} IS EMPTY OR a.id IN :#{#params.authors})
         AND (:#{#params.publisher} IS EMPTY OR p.id IN :#{#params.publisher})
         AND (:#{#params.genres} IS EMPTY OR g.id IN :#{#params.genres})
