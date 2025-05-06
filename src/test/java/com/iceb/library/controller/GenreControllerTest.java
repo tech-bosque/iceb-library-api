@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iceb.library.TestUtils;
 import com.iceb.library.dto.GenreRequestDto;
 import com.iceb.library.dto.GenreResponseDto;
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
 import com.iceb.library.service.GenreService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

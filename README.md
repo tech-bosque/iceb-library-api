@@ -7,7 +7,7 @@ This is a Spring Boot-based library application that provides functionalities fo
 1. **Clone the repository**:
     ```sh
     git clone https://github.com/tech-bosque/iceb-library-api.git
-    cd ecommerce
+    cd iceb-library-api
     ```
 
 2. **Build the project**:
