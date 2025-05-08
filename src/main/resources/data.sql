@@ -24,9 +24,9 @@ INSERT INTO topic (id, name, archived) VALUES
 ('8e7d8e7d-8e7d-8e7d-8e7d-8e7d8e7d8e7d', 'Topic Two', false);
 
 -- Insert Books
-INSERT INTO book (id, name, archived, edition, language, year, pages, observation, donation, asset_number, isbn, url_cover, publisher_id) VALUES
-('9e7d9e7d-9e7d-9e7d-9e7d-9e7d9e7d9e7d', 'Book One', false, 'First Edition', 'English', 2021, 300, 'Observation One', true, 'AN123', 'ISBN123', 'http://example.com/cover1', '1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d'),
-('ae7dae7d-ae7d-ae7d-ae7d-ae7dae7dae7d', 'Book Two', false, 'Second Edition', 'Spanish', 2022, 400, 'Observation Two', false, 'AN456', 'ISBN456', 'http://example.com/cover2', '2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d');
+INSERT INTO book (id, name, archived, edition, language, year, pages, observation, donation, asset_number, isbn, url_cover, publisher_id, available) VALUES
+('9e7d9e7d-9e7d-9e7d-9e7d-9e7d9e7d9e7d', 'Book One', false, 'First Edition', 'English', 2021, 300, 'Observation One', true, 'AN123', 'ISBN123', 'http://example.com/cover1', '1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', true),
+('ae7dae7d-ae7d-ae7d-ae7d-ae7dae7dae7d', 'Book Two', false, 'Second Edition', 'Spanish', 2022, 400, 'Observation Two', false, 'AN456', 'ISBN456', 'http://example.com/cover2', '2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', true);
 
 -- Insert Book-Author relationships
 INSERT INTO book_authors (book_id, authors_id) VALUES

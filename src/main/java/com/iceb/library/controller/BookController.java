@@ -1,8 +1,8 @@
 package com.iceb.library.controller;
 
-import com.iceb.library.dto.BookRequestDto;
-import com.iceb.library.dto.BookResponseDto;
-import com.iceb.library.dto.BookSearchDto;
+import com.iceb.library.dto.book.BookRequestDto;
+import com.iceb.library.dto.book.BookResponseDto;
+import com.iceb.library.dto.book.BookSearchDto;
 import com.iceb.library.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

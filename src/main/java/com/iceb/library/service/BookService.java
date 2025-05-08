@@ -1,12 +1,8 @@
 package com.iceb.library.service;
 
-import com.iceb.library.dto.BookRequestDto;
-import com.iceb.library.dto.BookResponseDto;
-import com.iceb.library.dto.BookSearchDto;
-import com.iceb.library.entity.Author;
-import com.iceb.library.entity.Genre;
-import com.iceb.library.entity.Publisher;
-import com.iceb.library.entity.Topic;
+import com.iceb.library.dto.book.BookRequestDto;
+import com.iceb.library.dto.book.BookResponseDto;
+import com.iceb.library.dto.book.BookSearchDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,4 +14,6 @@ public interface BookService {
     List<BookResponseDto> searchBooks(BookSearchDto bookSearchDto);
     BookResponseDto updateBook(UUID id, BookRequestDto bookRequestDto);
     BookResponseDto deleteBook(UUID id);
+    Boolean isBookAvailable(UUID id);
+    void updateBookAvailability(UUID id, Boolean available);
 }

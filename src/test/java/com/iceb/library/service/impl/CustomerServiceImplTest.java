@@ -1,9 +1,8 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.CustomerRequestDto;
-import com.iceb.library.dto.CustomerResponseDto;
-import com.iceb.library.dto.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerRequestDto;
+import com.iceb.library.dto.customer.CustomerResponseDto;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.exception.CustomerNotFoundException;
 import com.iceb.library.repository.CustomerRepository;

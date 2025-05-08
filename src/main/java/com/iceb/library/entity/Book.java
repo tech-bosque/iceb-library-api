@@ -57,5 +57,7 @@ public class Book {
 
     private String urlCover;
 
+    private Boolean available;
+
     private Boolean archived;
 }

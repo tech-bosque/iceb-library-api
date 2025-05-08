@@ -1,4 +1,4 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.publisher;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TopicResponseDto {
+public class PublisherResponseDto {
 
     private UUID id;
     private String name;

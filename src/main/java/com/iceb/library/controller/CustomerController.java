@@ -1,8 +1,8 @@
 package com.iceb.library.controller;
 
-import com.iceb.library.dto.CustomerRequestDto;
-import com.iceb.library.dto.CustomerResponseDto;
-import com.iceb.library.dto.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerRequestDto;
+import com.iceb.library.dto.customer.CustomerResponseDto;
+import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

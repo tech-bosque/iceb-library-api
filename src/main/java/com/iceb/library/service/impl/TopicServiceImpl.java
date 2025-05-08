@@ -1,11 +1,12 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.TopicRequestDto;
-import com.iceb.library.dto.TopicResponseDto;
+import com.iceb.library.dto.topic.TopicRequestDto;
+import com.iceb.library.dto.topic.TopicResponseDto;
 import com.iceb.library.entity.Topic;
 import com.iceb.library.exception.TopicNotFoundException;
 import com.iceb.library.repository.TopicRepository;
 import com.iceb.library.service.TopicService;
+import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Created topic successfully");
         logger.debug("Created topic: {}", savedTopic);
 
-        return mapToResponseDto(savedTopic);
+        return TranslatorUtils.topicToTopicResponseDto(savedTopic);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class TopicServiceImpl implements TopicService {
         logger.debug("Fetching topic with ID: {}", id);
 
         Topic topic = findTopicById(id);
-        TopicResponseDto responseDto = mapToResponseDto(topic);
+        TopicResponseDto responseDto = TranslatorUtils.topicToTopicResponseDto(topic);
 
         logger.debug("Fetched topic: {}", responseDto);
         logger.info("Fetched topic by ID successfully");
@@ -66,7 +67,7 @@ public class TopicServiceImpl implements TopicService {
         }
 
         List<TopicResponseDto> responseDtos = topics.stream()
-                .map(this::mapToResponseDto)
+                .map(TranslatorUtils::topicToTopicResponseDto)
                 .collect(Collectors.toList());
 
         logger.debug("Fetched topics: {}", responseDtos);
@@ -86,7 +87,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Updated topic successfully");
         logger.debug("Updated topic: {}", updatedTopic);
 
-        return mapToResponseDto(updatedTopic);
+        return TranslatorUtils.topicToTopicResponseDto(updatedTopic);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class TopicServiceImpl implements TopicService {
         logger.info("Archived topic successfully");
         logger.debug("Archived topic with ID: {}", id);
 
-        return mapToResponseDto(archivedTopic);
+        return TranslatorUtils.topicToTopicResponseDto(archivedTopic);
     }
 
     private Topic findTopicById(UUID id) {
@@ -112,11 +113,4 @@ public class TopicServiceImpl implements TopicService {
                 .orElseThrow(() -> new TopicNotFoundException("The topic with the provided ID does not exist"));
     }
 
-    private TopicResponseDto mapToResponseDto(Topic topic) {
-        return TopicResponseDto.builder()
-                .id(topic.getId())
-                .name(topic.getName())
-                .archived(topic.getArchived())
-                .build();
-    }
 }

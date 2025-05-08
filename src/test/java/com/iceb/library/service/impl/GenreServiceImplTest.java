@@ -1,8 +1,8 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.GenreRequestDto;
-import com.iceb.library.dto.GenreResponseDto;
+import com.iceb.library.dto.genre.GenreRequestDto;
+import com.iceb.library.dto.genre.GenreResponseDto;
 import com.iceb.library.entity.Genre;
 import com.iceb.library.exception.GenreNotFoundException;
 import com.iceb.library.repository.GenreRepository;

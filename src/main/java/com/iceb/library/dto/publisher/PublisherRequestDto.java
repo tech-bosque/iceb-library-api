@@ -1,20 +1,16 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.publisher;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthorResponseDto {
+public class PublisherRequestDto {
 
-    private UUID id;
     private String name;
-    private Boolean archived;
 
 }

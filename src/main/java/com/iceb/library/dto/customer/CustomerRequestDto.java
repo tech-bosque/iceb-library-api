@@ -1,4 +1,4 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.customer;
 
 import com.iceb.library.enums.Role;
 import lombok.AllArgsConstructor;

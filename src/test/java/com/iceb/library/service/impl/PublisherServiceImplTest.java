@@ -1,8 +1,8 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
+import com.iceb.library.dto.publisher.PublisherRequestDto;
+import com.iceb.library.dto.publisher.PublisherResponseDto;
 import com.iceb.library.entity.Publisher;
 import com.iceb.library.exception.PublisherNotFoundException;
 import com.iceb.library.repository.PublisherRepository;

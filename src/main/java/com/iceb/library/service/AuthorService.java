@@ -1,7 +1,7 @@
 package com.iceb.library.service;
 
-import com.iceb.library.dto.AuthorRequestDto;
-import com.iceb.library.dto.AuthorResponseDto;
+import com.iceb.library.dto.author.AuthorRequestDto;
+import com.iceb.library.dto.author.AuthorResponseDto;
 
 import java.util.List;
 import java.util.UUID;

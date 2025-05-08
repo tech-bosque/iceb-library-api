@@ -1,11 +1,12 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.BookRequestDto;
-import com.iceb.library.dto.BookResponseDto;
+import com.iceb.library.dto.book.BookRequestDto;
+import com.iceb.library.dto.book.BookResponseDto;
 import com.iceb.library.entity.Book;
 import com.iceb.library.exception.BookNotFoundException;
 import com.iceb.library.repository.BookRepository;
+import com.iceb.library.validation.BookValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +31,9 @@ public class BookServiceImplTest {
     @Mock
     private BookRepository bookRepository;
 
+    @Mock
+    private BookValidator bookValidator;
+
     @Test
     void createBookTest() {
 
@@ -39,7 +43,7 @@ public class BookServiceImplTest {
 
         BookResponseDto bookResponseDto = bookServiceImpl.createBook(bookRequestDto);
 
-        assertThat(bookResponseDto).usingRecursiveComparison().ignoringFields("id","archived").isEqualTo(bookRequestDto);
+        assertThat(bookResponseDto).usingRecursiveComparison().ignoringFields("id", "archived", "available").isEqualTo(bookRequestDto);
     }
 
     @Test
@@ -51,7 +55,7 @@ public class BookServiceImplTest {
 
         BookResponseDto bookResponseDto = bookServiceImpl.getBookById(book.getId());
 
-        assertThat(book).usingRecursiveComparison().isEqualTo(bookResponseDto);
+        assertThat(book).usingRecursiveComparison().ignoringFields("topics", "genres", "publisher", "authors").isEqualTo(bookResponseDto);
     }
 
     @Test
@@ -76,7 +80,7 @@ public class BookServiceImplTest {
         List<BookResponseDto> bookResponseDtos = bookServiceImpl.searchBooks(TestUtils.bookSearchDto());
 
         Assertions.assertEquals(2, bookResponseDtos.size());
-        assertThat(books).usingRecursiveComparison().isEqualTo(bookResponseDtos);
+        assertThat(books).usingRecursiveComparison().ignoringFields("topics", "genres", "publisher", "authors").isEqualTo(bookResponseDtos);
     }
 
     @Test
@@ -105,5 +109,28 @@ public class BookServiceImplTest {
 
         Assertions.assertEquals(book.getName(), bookResponseDto.getName());
         Assertions.assertTrue(bookResponseDto.getArchived());
+    }
+
+    @Test
+    void isBookAvailableTest() {
+        Book book = TestUtils.book(false);
+
+        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
+
+        Boolean isAvailable = bookServiceImpl.isBookAvailable(book.getId());
+
+        Assertions.assertTrue(isAvailable);
+    }
+
+    @Test
+    void updateBookAvailabilityTest() {
+        Book book = TestUtils.book(false);
+
+        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
+        when(bookRepository.save(Mockito.any(Book.class))).thenReturn(book);
+
+        bookServiceImpl.updateBookAvailability(book.getId(), false);
+
+        Assertions.assertFalse(book.getAvailable());
     }
 }

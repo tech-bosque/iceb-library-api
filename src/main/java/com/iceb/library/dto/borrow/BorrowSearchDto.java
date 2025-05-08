@@ -1,4 +1,4 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.borrow;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GenreResponseDto {
+public class BorrowSearchDto {
 
     private UUID id;
-    private String name;
-    private Boolean archived;
+
+    private UUID customerId;
+
+    private String customerName;
+
+    private String borrowDate;
 
 }

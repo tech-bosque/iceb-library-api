@@ -1,7 +1,7 @@
 package com.iceb.library.service;
 
-import com.iceb.library.dto.GenreRequestDto;
-import com.iceb.library.dto.GenreResponseDto;
+import com.iceb.library.dto.genre.GenreRequestDto;
+import com.iceb.library.dto.genre.GenreResponseDto;
 
 import java.util.List;
 import java.util.UUID;

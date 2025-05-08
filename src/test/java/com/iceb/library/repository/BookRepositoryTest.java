@@ -1,6 +1,6 @@
 package com.iceb.library.repository;
 
-import com.iceb.library.dto.BookSearchDto;
+import com.iceb.library.dto.book.BookSearchDto;
 import com.iceb.library.entity.Book;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

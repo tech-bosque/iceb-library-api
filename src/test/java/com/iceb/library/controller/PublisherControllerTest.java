@@ -2,8 +2,8 @@ package com.iceb.library.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
+import com.iceb.library.dto.publisher.PublisherRequestDto;
+import com.iceb.library.dto.publisher.PublisherResponseDto;
 import com.iceb.library.service.PublisherService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

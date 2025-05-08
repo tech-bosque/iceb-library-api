@@ -1,8 +1,8 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.AuthorRequestDto;
-import com.iceb.library.dto.AuthorResponseDto;
+import com.iceb.library.dto.author.AuthorRequestDto;
+import com.iceb.library.dto.author.AuthorResponseDto;
 import com.iceb.library.entity.Author;
 import com.iceb.library.exception.AuthorNotFoundException;
 import com.iceb.library.repository.AuthorRepository;

@@ -1,7 +1,7 @@
 package com.iceb.library.repository;
 
 import com.iceb.library.entity.Book;
-import com.iceb.library.dto.BookSearchDto;
+import com.iceb.library.dto.book.BookSearchDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
