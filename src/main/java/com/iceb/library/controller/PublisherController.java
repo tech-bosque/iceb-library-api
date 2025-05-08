@@ -1,8 +1,8 @@
 package com.iceb.library.controller;
 
 
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
+import com.iceb.library.dto.publisher.PublisherRequestDto;
+import com.iceb.library.dto.publisher.PublisherResponseDto;
 import com.iceb.library.service.PublisherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,11 +1,12 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.AuthorRequestDto;
-import com.iceb.library.dto.AuthorResponseDto;
+import com.iceb.library.dto.author.AuthorRequestDto;
+import com.iceb.library.dto.author.AuthorResponseDto;
 import com.iceb.library.entity.Author;
 import com.iceb.library.exception.AuthorNotFoundException;
 import com.iceb.library.repository.AuthorRepository;
 import com.iceb.library.service.AuthorService;
+import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Created author successfully");
         logger.debug("Created author: {}", savedAuthor);
 
-        return mapToResponseDto(savedAuthor);
+        return TranslatorUtils.authorToAuthorResponseDto(savedAuthor);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.debug("Fetching author with ID: {}", id);
 
         Author author = findAuthorById(id);
-        AuthorResponseDto responseDto = mapToResponseDto(author);
+        AuthorResponseDto responseDto = TranslatorUtils.authorToAuthorResponseDto(author);
 
         logger.debug("Fetched author: {}", responseDto);
         logger.info("Fetched author by ID successfully");
@@ -66,7 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
         }
 
         List<AuthorResponseDto> responseDtos = authors.stream()
-                .map(this::mapToResponseDto)
+                .map(TranslatorUtils::authorToAuthorResponseDto)
                 .collect(Collectors.toList());
 
         logger.debug("Fetched authors: {}", responseDtos);
@@ -86,7 +87,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Updated author successfully");
         logger.debug("Updated author: {}", updatedAuthor);
 
-        return mapToResponseDto(updatedAuthor);
+        return TranslatorUtils.authorToAuthorResponseDto(updatedAuthor);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class AuthorServiceImpl implements AuthorService {
         logger.info("Archived author successfully");
         logger.debug("Archived author with ID: {}", id);
 
-        return mapToResponseDto(archivedAuthor);
+        return TranslatorUtils.authorToAuthorResponseDto(archivedAuthor);
     }
 
     private Author findAuthorById(UUID id) {
@@ -112,11 +113,4 @@ public class AuthorServiceImpl implements AuthorService {
                 .orElseThrow(() -> new AuthorNotFoundException("The author with the provided ID does not exist"));
     }
 
-    private AuthorResponseDto mapToResponseDto(Author author) {
-        return AuthorResponseDto.builder()
-                .id(author.getId())
-                .name(author.getName())
-                .archived(author.getArchived())
-                .build();
-    }
 }
