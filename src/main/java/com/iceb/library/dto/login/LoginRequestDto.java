@@ -1,11 +1,11 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.login;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class LoginRequestDTO {
+public class LoginRequestDto {
     private String email;
     private String password;
 }

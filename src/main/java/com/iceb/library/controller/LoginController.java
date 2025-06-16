@@ -1,7 +1,7 @@
 package com.iceb.library.controller;
 
-import com.iceb.library.dto.LoginRequestDTO;
-import com.iceb.library.dto.LoginResponseDTO;
+import com.iceb.library.dto.login.LoginRequestDto;
+import com.iceb.library.dto.login.LoginResponseDto;
 import com.iceb.library.security.JwtIssuer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +18,9 @@ public class LoginController {
     private final JwtIssuer jwtIssuer;
 
     @PostMapping
-    public LoginResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        var token = jwtIssuer.issue(1L, loginRequestDTO.getEmail(), List.of("USER"));
-        return LoginResponseDTO
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDTO) {
+        var token = jwtIssuer.issue(loginRequestDTO.getEmail(), List.of("USER"));
+        return LoginResponseDto
                 .builder()
                 .accessToken(token)
                 .build();
