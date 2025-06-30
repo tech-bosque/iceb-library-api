@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        var token = jwtIssuer.issue(/*principal.getUserId(), */principal.getEmail(), roles);
+        var token = jwtIssuer.issue(principal.getUserId(), principal.getEmail(), roles);
         return LoginResponseDto
                 .builder()
                 .accessToken(token)
