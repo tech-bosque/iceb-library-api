@@ -6,7 +6,6 @@ import com.iceb.library.enums.Role;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
                 .email("second@test.com")
                 .phone("1234567890")
                 .password("test")
-                .role(Role.LIBRARIAN)
+                .role(Role.ROLE_LIBRARIAN)
                 .archived(false)
                 .build();
 

@@ -1,7 +1,7 @@
 -- src/main/resources/data.sql
 INSERT INTO customer (id, name, password, email, phone, role, archived) VALUES
-('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Customer One', '1234', 'one@customer.com', '123456789', 'ADMIN', false),
-('2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', 'Customer Two', '1234', 'two@customer.com', '987654321', 'LIBRARIAN', false);
+('1e7d1e7d-1e7d-1e7d-1e7d-1e7d1e7d1e7d', 'Customer One', '$2a$12$u8r90IfnPDVaUWzSEMhbxezG5gnKNR2F0u2rubyuRPwPxJmVimO.C', 'one@customer.com', '123456789', 'ROLE_ADMIN', false),
+('2e7d2e7d-2e7d-2e7d-2e7d-2e7d2e7d2e7d', 'Customer Two', '$2a$12$u8r90IfnPDVaUWzSEMhbxezG5gnKNR2F0u2rubyuRPwPxJmVimO.C', 'two@customer.com', '987654321', 'ROLE_LIBRARIAN', false);
 
 -- Insert Publishers
 INSERT INTO publisher (id, name, archived) VALUES
