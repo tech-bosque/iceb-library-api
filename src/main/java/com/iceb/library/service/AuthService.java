@@ -1,9 +1,10 @@
 package com.iceb.library.service;
 
 import com.iceb.library.dto.login.LoginResponseDto;
+import com.iceb.library.exception.AuthorizationException;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface AuthService {
-    LoginResponseDto attemptLogin(String email, String password) throws Exception;
+    LoginResponseDto attemptLogin(String email, String password) throws AuthorizationException;
 }

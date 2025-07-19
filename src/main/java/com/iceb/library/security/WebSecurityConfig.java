@@ -19,7 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 
-// TODO: Check the two web configs
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class WebSecurityConfig {
                 .cors(cors ->
                         cors.configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(Collections.singletonList("localhost:*"));
+                            config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:*"));
                             config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                             config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
                             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -53,7 +52,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/book/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/api/roles/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 

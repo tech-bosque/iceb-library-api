@@ -18,7 +18,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = loginService.findByEmail(username).orElseThrow();
+        Customer customer = loginService.findByEmail(username).orElseThrow(() ->
+                new UsernameNotFoundException("User not found with email: " + username));
         return UserPrincipal
                 .builder()
                 .userId(customer.getId())
