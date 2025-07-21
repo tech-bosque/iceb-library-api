@@ -1,12 +1,13 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.CustomerResponseDto;
-import com.iceb.library.dto.CustomerSearchDto;
-import com.iceb.library.dto.CustomerRequestDto;
+import com.iceb.library.dto.customer.CustomerResponseDto;
+import com.iceb.library.dto.customer.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.exception.CustomerNotFoundException;
 import com.iceb.library.repository.CustomerRepository;
 import com.iceb.library.service.CustomerService;
+import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Created customer successfully");
         logger.debug("Created customer: {}", savedCustomer);
 
-        return mapToResponseDto(savedCustomer);
+        return TranslatorUtils.customerToCustomerResponseDto(savedCustomer);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.debug("Fetching customer with ID: {}", id);
 
         Customer customer = findCustomerById(id);
-        CustomerResponseDto responseDto = mapToResponseDto(customer);
+        CustomerResponseDto responseDto = TranslatorUtils.customerToCustomerResponseDto(customer);
 
         logger.debug("Fetched customer: {}", responseDto);
         logger.info("Fetched customer by ID successfully");
@@ -74,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Updated customer successfully");
         logger.debug("Updated customer: {}", updatedCustomer);
 
-        return mapToResponseDto(updatedCustomer);
+        return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Archived customer successfully");
         logger.debug("Archived customer with ID: {}", id);
 
-        return mapToResponseDto(archivedCustomer);
+        return TranslatorUtils.customerToCustomerResponseDto(archivedCustomer);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerRepository.searchCustomers(customerSearchDto);
 
         List<CustomerResponseDto> responseDtos = customers.stream()
-                .map(this::mapToResponseDto)
+                .map(TranslatorUtils::customerToCustomerResponseDto)
                 .collect(Collectors.toList());
 
         logger.debug("Fetched customers: {}", responseDtos);
@@ -116,14 +117,5 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new CustomerNotFoundException("The customer with the provided ID does not exist"));
     }
 
-    private CustomerResponseDto mapToResponseDto(Customer customer) {
-        return CustomerResponseDto.builder()
-                .id(customer.getId())
-                .name(customer.getName())
-                .email(customer.getEmail())
-                .phone(customer.getPhone())
-                .role(customer.getRole())
-                .archived(customer.getArchived())
-                .build();
-    }
+
 }

@@ -14,7 +14,7 @@ public class BookNotFoundException extends LibraryApiException{
     @Override
     public ProblemDetail toProblemDetail() {
         var pb = super.toProblemDetail();
-        pb.setTitle("Book Not Created");
+        pb.setTitle("Book Not Found");
         pb.setStatus(HttpStatus.NOT_FOUND);
         pb.setDetail(detail);
         return pb;

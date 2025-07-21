@@ -1,11 +1,12 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.PublisherRequestDto;
-import com.iceb.library.dto.PublisherResponseDto;
+import com.iceb.library.dto.publisher.PublisherRequestDto;
+import com.iceb.library.dto.publisher.PublisherResponseDto;
 import com.iceb.library.entity.Publisher;
 import com.iceb.library.exception.PublisherNotFoundException;
 import com.iceb.library.repository.PublisherRepository;
 import com.iceb.library.service.PublisherService;
+import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Created publisher successfully");
         logger.debug("Created publisher: {}", savedPublisher);
 
-        return mapToResponseDto(savedPublisher);
+        return TranslatorUtils.publisherToPublisherResponseDto(savedPublisher);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.debug("Fetching publisher with ID: {}", id);
 
         Publisher publisher = findPublisherById(id);
-        PublisherResponseDto responseDto = mapToResponseDto(publisher);
+        PublisherResponseDto responseDto = TranslatorUtils.publisherToPublisherResponseDto(publisher);
 
         logger.debug("Fetched publisher: {}", responseDto);
         logger.info("Fetched publisher by ID successfully");
@@ -66,7 +67,7 @@ public class PublisherServiceImpl implements PublisherService {
         }
 
         List<PublisherResponseDto> responseDtos = publishers.stream()
-                .map(this::mapToResponseDto)
+                .map(TranslatorUtils::publisherToPublisherResponseDto)
                 .collect(Collectors.toList());
 
         logger.debug("Fetched publishers: {}", responseDtos);
@@ -86,7 +87,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Updated publisher successfully");
         logger.debug("Updated publisher: {}", updatedPublisher);
 
-        return mapToResponseDto(updatedPublisher);
+        return TranslatorUtils.publisherToPublisherResponseDto(updatedPublisher);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class PublisherServiceImpl implements PublisherService {
         logger.info("Archived publisher successfully");
         logger.debug("Archived publisher with ID: {}", id);
 
-        return mapToResponseDto(archivedPublisher);
+        return TranslatorUtils.publisherToPublisherResponseDto(archivedPublisher);
     }
 
     private Publisher findPublisherById(UUID id) {
@@ -112,11 +113,4 @@ public class PublisherServiceImpl implements PublisherService {
                 .orElseThrow(() -> new PublisherNotFoundException("The publisher with the provided ID does not exist"));
     }
 
-    private PublisherResponseDto mapToResponseDto(Publisher publisher) {
-        return PublisherResponseDto.builder()
-                .id(publisher.getId())
-                .name(publisher.getName())
-                .archived(publisher.getArchived())
-                .build();
-    }
 }

@@ -1,7 +1,7 @@
 package com.iceb.library.controller;
 
-import com.iceb.library.dto.GenreRequestDto;
-import com.iceb.library.dto.GenreResponseDto;
+import com.iceb.library.dto.genre.GenreRequestDto;
+import com.iceb.library.dto.genre.GenreResponseDto;
 import com.iceb.library.service.GenreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

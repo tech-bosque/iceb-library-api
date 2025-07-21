@@ -1,7 +1,7 @@
 package com.iceb.library.controller;
 
-import com.iceb.library.dto.TopicRequestDto;
-import com.iceb.library.dto.TopicResponseDto;
+import com.iceb.library.dto.topic.TopicRequestDto;
+import com.iceb.library.dto.topic.TopicResponseDto;
 import com.iceb.library.service.TopicService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

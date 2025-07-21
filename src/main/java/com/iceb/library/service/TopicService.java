@@ -1,7 +1,7 @@
 package com.iceb.library.service;
 
-import com.iceb.library.dto.TopicRequestDto;
-import com.iceb.library.dto.TopicResponseDto;
+import com.iceb.library.dto.topic.TopicRequestDto;
+import com.iceb.library.dto.topic.TopicResponseDto;
 
 import java.util.List;
 import java.util.UUID;
