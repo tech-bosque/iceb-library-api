@@ -8,8 +8,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("security.jwt")
 public class JwtProperties {
-    /**
-     * Secret key for JWT issuing
-     */
     private String secretKey;
 }
