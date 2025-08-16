@@ -1,6 +1,7 @@
 package com.iceb.library.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +18,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +25,12 @@ import java.util.Collections;
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailService customUserDetailService;
+
+    @Value("${cors.allowed-origins}")
+    private String allowedOrigins;
+
+    @Value("${cors.allowed-methods}")
+    private String allowedMethods;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,9 +40,11 @@ public class WebSecurityConfig {
                 .cors(cors ->
                         cors.configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:*"));
-                            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                            config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+                            config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
                             config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+                            config.setAllowCredentials(true);
+                            config.setMaxAge(3600L);
                             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                             source.registerCorsConfiguration("/**", config);
                             return config;
@@ -51,6 +59,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("v3/api-docs/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/book/**").hasRole("LIBRARIAN")
                         .requestMatchers("/api/roles/**").hasRole("ADMIN")
