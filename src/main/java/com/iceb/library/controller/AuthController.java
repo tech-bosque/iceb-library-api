@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request) throws Exception {
         LoginResponseDto response = authService.attemptLogin(request.getEmail(), request.getPassword());
 

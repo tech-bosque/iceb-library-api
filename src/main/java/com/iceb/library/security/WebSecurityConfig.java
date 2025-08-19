@@ -56,11 +56,14 @@ public class WebSecurityConfig {
                         .formLogin(AbstractHttpConfigurer::disable)
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/api/login").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("v3/api-docs/**").permitAll()
-                        .requestMatchers("/error").permitAll()
+                        .requestMatchers(
+                            "/",
+                            "/api/login",
+                            "/api/register",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/error"
+                        ).permitAll()
                         .requestMatchers("/api/book/**").hasRole("LIBRARIAN")
                         .requestMatchers("/api/roles/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
