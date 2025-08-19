@@ -14,12 +14,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(false)
+@TestPropertySource("classpath:application-test.properties")
 public abstract class TestRepositoryHelper {
 
     @Autowired
@@ -58,7 +61,7 @@ public abstract class TestRepositoryHelper {
         genreTest = genreRepository.save(genreTest);
 
         authorTest = TestUtils.author(false);
-        authorTest= authorRepository.save(authorTest);
+        authorTest = authorRepository.save(authorTest);
 
         publisherTest = TestUtils.publisher(false);
         publisherTest = publisherRepository.save(publisherTest);

@@ -45,7 +45,7 @@ public class TranslatorUtils {
                 .name(book.getName())
                 .edition(book.getEdition())
                 .language(book.getLanguage())
-                .year(book.getYear())
+                .publicationYear(book.getPublicationYear())
                 .pages(book.getPages())
                 .observation(book.getObservation())
                 .donation(book.getDonation())
