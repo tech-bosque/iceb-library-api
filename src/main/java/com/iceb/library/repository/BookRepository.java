@@ -1,7 +1,7 @@
 package com.iceb.library.repository;
 
+import com.iceb.library.dto.book.BookSearchDto;
 import com.iceb.library.entity.Book;
-import com.iceb.library.dto.BookSearchDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +23,7 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
             "AND (:#{#params.topic} IS NULL OR LOWER(t.name) LIKE LOWER(CONCAT('%', :#{#params.topic}, '%'))) " +
             "AND (:#{#params.edition} IS NULL OR LOWER(b.edition) LIKE LOWER(CONCAT('%', :#{#params.edition}, '%'))) " +
             "AND (:#{#params.language} IS NULL OR LOWER(b.language) LIKE LOWER(CONCAT('%', :#{#params.language}, '%'))) " +
-            "AND (:#{#params.year} IS NULL OR b.year = :#{#params.year}) " +
+            "AND (:#{#params.publicationYear} IS NULL OR b.publicationYear = :#{#params.publicationYear}) " +
             "AND (:#{#params.pages} IS NULL OR b.pages = :#{#params.pages}) " +
             "AND (:#{#params.observation} IS NULL OR LOWER(b.observation) LIKE LOWER(CONCAT('%', :#{#params.observation}, '%'))) " +
             "AND (:#{#params.donation} IS NULL OR b.donation = :#{#params.donation}) " +

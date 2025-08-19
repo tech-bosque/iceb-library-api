@@ -43,7 +43,7 @@ public class Book {
 
     private String language;
 
-    private Integer year;
+    private Integer publicationYear;
 
     private Integer pages;
 
@@ -56,6 +56,8 @@ public class Book {
     private String isbn;
 
     private String urlCover;
+
+    private Boolean available;
 
     private Boolean archived;
 }

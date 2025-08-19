@@ -1,11 +1,12 @@
 package com.iceb.library.service.impl;
 
-import com.iceb.library.dto.GenreRequestDto;
-import com.iceb.library.dto.GenreResponseDto;
+import com.iceb.library.dto.genre.GenreRequestDto;
+import com.iceb.library.dto.genre.GenreResponseDto;
 import com.iceb.library.entity.Genre;
 import com.iceb.library.exception.GenreNotFoundException;
 import com.iceb.library.repository.GenreRepository;
 import com.iceb.library.service.GenreService;
+import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Created genre successfully");
         logger.debug("Created genre: {}", savedGenre);
 
-        return mapToResponseDto(savedGenre);
+        return TranslatorUtils.genreToGenreResponseDto(savedGenre);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GenreServiceImpl implements GenreService {
         logger.debug("Fetching genre with ID: {}", id);
 
         Genre genre = findGenreById(id);
-        GenreResponseDto responseDto = mapToResponseDto(genre);
+        GenreResponseDto responseDto = TranslatorUtils.genreToGenreResponseDto(genre);
 
         logger.debug("Fetched genre: {}", responseDto);
         logger.info("Fetched genre by ID successfully");
@@ -66,7 +67,7 @@ public class GenreServiceImpl implements GenreService {
         }
 
         List<GenreResponseDto> responseDtos = genres.stream()
-                .map(this::mapToResponseDto)
+                .map(TranslatorUtils::genreToGenreResponseDto)
                 .collect(Collectors.toList());
 
         logger.debug("Fetched genres: {}", responseDtos);
@@ -86,7 +87,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Updated genre successfully");
         logger.debug("Updated genre: {}", updatedGenre);
 
-        return mapToResponseDto(updatedGenre);
+        return TranslatorUtils.genreToGenreResponseDto(updatedGenre);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class GenreServiceImpl implements GenreService {
         logger.info("Archived genre successfully");
         logger.debug("Archived genre with ID: {}", id);
 
-        return mapToResponseDto(archivedGenre);
+        return TranslatorUtils.genreToGenreResponseDto(archivedGenre);
     }
 
     private Genre findGenreById(UUID id) {
@@ -112,11 +113,4 @@ public class GenreServiceImpl implements GenreService {
                 .orElseThrow(() -> new GenreNotFoundException("The genre with the provided ID does not exist"));
     }
 
-    private GenreResponseDto mapToResponseDto(Genre genre) {
-        return GenreResponseDto.builder()
-                .id(genre.getId())
-                .name(genre.getName())
-                .archived(genre.getArchived())
-                .build();
-    }
 }

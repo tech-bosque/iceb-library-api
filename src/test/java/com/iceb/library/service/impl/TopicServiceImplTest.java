@@ -1,8 +1,8 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.TopicRequestDto;
-import com.iceb.library.dto.TopicResponseDto;
+import com.iceb.library.dto.topic.TopicRequestDto;
+import com.iceb.library.dto.topic.TopicResponseDto;
 import com.iceb.library.entity.Topic;
 import com.iceb.library.exception.TopicNotFoundException;
 import com.iceb.library.repository.TopicRepository;

@@ -1,9 +1,5 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.book;
 
-import com.iceb.library.entity.Author;
-import com.iceb.library.entity.Genre;
-import com.iceb.library.entity.Publisher;
-import com.iceb.library.entity.Topic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,19 +18,19 @@ public class BookResponseDto {
 
     private String name;
 
-    private List<Author> authors;
+    private List<UUID> authorsId;
 
-    private Publisher publisher;
+    private UUID publisherId;
 
-    private List<Genre> genres;
+    private List<UUID> genresId;
 
-    private List<Topic> topics;
+    private List<UUID> topicsId;
 
     private String edition;
 
     private String language;
 
-    private Integer year;
+    private Integer publicationYear;
 
     private Integer pages;
 
@@ -47,6 +43,8 @@ public class BookResponseDto {
     private String isbn;
 
     private String urlCover;
+
+    private Boolean available;
 
     private Boolean archived;
 

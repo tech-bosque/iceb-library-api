@@ -1,6 +1,6 @@
 package com.iceb.library.repository;
 
-import com.iceb.library.dto.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.enums.Role;
 import org.junit.jupiter.api.Assertions;

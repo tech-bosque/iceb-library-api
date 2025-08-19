@@ -1,15 +1,16 @@
 package com.iceb.library.repository;
 
-import com.iceb.library.dto.BookSearchDto;
+import com.iceb.library.dto.book.BookSearchDto;
 import com.iceb.library.entity.Book;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class BookRepositoryTest extends TestRepositoryHelper{
+
+public class BookRepositoryTest extends TestRepositoryHelper {
 
 
     @Test
@@ -27,7 +28,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
                 .name("Second Book")
                 .edition("Second Edition")
                 .language("English")
-                .year(2021)
+                .publicationYear(2021)
                 .pages(200)
                 .observation("Second Observation")
                 .donation(false)
@@ -62,7 +63,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByAuthorTest(){
+    void searchBooksByAuthorTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .author(bookTest.getAuthors().getFirst().getName())
                 .build();
@@ -76,7 +77,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByPublisherTest(){
+    void searchBooksByPublisherTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .publisher(bookTest.getPublisher().getName())
                 .build();
@@ -90,7 +91,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByGenreTest(){
+    void searchBooksByGenreTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .genre(bookTest.getGenres().getFirst().getName())
                 .build();
@@ -104,7 +105,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByTopicTest(){
+    void searchBooksByTopicTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .topic(bookTest.getTopics().getFirst().getName())
                 .build();
@@ -118,7 +119,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByEditionTest(){
+    void searchBooksByEditionTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .edition(bookTest.getEdition())
                 .build();
@@ -132,7 +133,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByLanguageTest(){
+    void searchBooksByLanguageTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .language(bookTest.getLanguage())
                 .build();
@@ -146,9 +147,9 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByYearTest(){
+    void searchBooksByYearTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
-                .year(bookTest.getYear())
+                .publicationYear(bookTest.getPublicationYear())
                 .build();
 
         List<Book> savedBooks = bookRepository.searchBooks(bookSearchDto);
@@ -160,7 +161,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByPagesTest(){
+    void searchBooksByPagesTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .pages(bookTest.getPages())
                 .build();
@@ -174,7 +175,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByObservationTest(){
+    void searchBooksByObservationTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .observation(bookTest.getObservation())
                 .build();
@@ -188,7 +189,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByDonationTest(){
+    void searchBooksByDonationTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .donation(bookTest.getDonation())
                 .build();
@@ -202,7 +203,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByAssetNumberTest(){
+    void searchBooksByAssetNumberTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .assetNumber(bookTest.getAssetNumber())
                 .build();
@@ -216,7 +217,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByIsbnTest(){
+    void searchBooksByIsbnTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .isbn(bookTest.getIsbn())
                 .build();
@@ -230,7 +231,7 @@ public class BookRepositoryTest extends TestRepositoryHelper{
     }
 
     @Test
-    void searchBooksByUrlCoverTest(){
+    void searchBooksByUrlCoverTest() {
         BookSearchDto bookSearchDto = BookSearchDto.builder()
                 .urlCover(bookTest.getUrlCover())
                 .build();

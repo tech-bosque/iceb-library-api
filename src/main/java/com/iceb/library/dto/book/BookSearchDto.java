@@ -1,37 +1,31 @@
-package com.iceb.library.dto;
+package com.iceb.library.dto.book;
 
-import com.iceb.library.entity.Author;
-import com.iceb.library.entity.Genre;
-import com.iceb.library.entity.Publisher;
-import com.iceb.library.entity.Topic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookRequestDto {
+public class BookSearchDto {
 
     private String name;
 
-    private List<Author> authors;
+    private String author;
 
-    private Publisher publisher;
+    private String publisher;
 
-    private List<Genre> genres;
+    private String genre;
 
-    private List<Topic> topics;
+    private String topic;
 
     private String edition;
 
     private String language;
 
-    private Integer year;
+    private Integer publicationYear;
 
     private Integer pages;
 

@@ -3,6 +3,7 @@ package com.iceb.library.repository;
 import com.iceb.library.TestUtils;
 import com.iceb.library.entity.Author;
 import com.iceb.library.entity.Book;
+import com.iceb.library.entity.Borrow;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.entity.Genre;
 import com.iceb.library.entity.Publisher;
@@ -13,11 +14,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 
-import java.util.Arrays;
+import java.util.List;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(false)
+@TestPropertySource("classpath:application-test.properties")
 public abstract class TestRepositoryHelper {
 
     @Autowired
@@ -38,12 +43,16 @@ public abstract class TestRepositoryHelper {
     @Autowired
     protected TopicRepository topicRepository;
 
+    @Autowired
+    protected BorrowRepository borrowRepository;
+
     protected Book bookTest;
     protected Customer customerTest;
     protected Genre genreTest;
     protected Author authorTest;
     protected Publisher publisherTest;
     protected Topic topicTest;
+    protected Borrow borrowTest;
 
     @BeforeEach
     public void setUp() {
@@ -52,7 +61,7 @@ public abstract class TestRepositoryHelper {
         genreTest = genreRepository.save(genreTest);
 
         authorTest = TestUtils.author(false);
-        authorTest= authorRepository.save(authorTest);
+        authorTest = authorRepository.save(authorTest);
 
         publisherTest = TestUtils.publisher(false);
         publisherTest = publisherRepository.save(publisherTest);
@@ -61,16 +70,20 @@ public abstract class TestRepositoryHelper {
         topicTest = topicRepository.save(topicTest);
 
         bookTest = TestUtils.book(false);
-        bookTest.setGenres(Arrays.asList(genreTest));
-        bookTest.setAuthors(Arrays.asList(authorTest));
+        bookTest.setGenres(List.of(genreTest));
+        bookTest.setAuthors(List.of(authorTest));
         bookTest.setPublisher(publisherTest);
-        bookTest.setTopics(Arrays.asList(topicTest));
+        bookTest.setTopics(List.of(topicTest));
 
         bookTest = bookRepository.save(bookTest);
 
         customerTest = TestUtils.customer(false);
         customerTest.setRole(Role.ROLE_ADMIN);
         customerTest = customerRepository.save(customerTest);
+
+        borrowTest = TestUtils.borrow();
+        borrowTest.setCustomer(customerTest);
+        borrowTest = borrowRepository.save(borrowTest);
     }
 
     @AfterEach
@@ -81,5 +94,6 @@ public abstract class TestRepositoryHelper {
         publisherRepository.deleteAll();
         topicRepository.deleteAll();
         customerRepository.deleteAll();
+        borrowRepository.deleteAll();
     }
 }

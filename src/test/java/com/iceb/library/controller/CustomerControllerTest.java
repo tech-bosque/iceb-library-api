@@ -3,15 +3,14 @@ package com.iceb.library.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iceb.library.TestUtils;
-import com.iceb.library.dto.CustomerRequestDto;
-import com.iceb.library.dto.CustomerResponseDto;
-import com.iceb.library.dto.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerRequestDto;
+import com.iceb.library.dto.customer.CustomerResponseDto;
+import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.service.CustomerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,8 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(CustomerController.class)
 public class CustomerControllerTest {
 
     @Autowired
