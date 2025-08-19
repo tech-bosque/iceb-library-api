@@ -25,7 +25,7 @@ public class BookSearchDto {
 
     private String language;
 
-    private Integer year;
+    private Integer publicationYear;
 
     private Integer pages;
 

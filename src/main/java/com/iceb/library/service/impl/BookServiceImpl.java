@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
                 .topics(bookValidator.validateTopicsId(bookRequestDto.getTopicsId()))
                 .edition(bookRequestDto.getEdition())
                 .language(bookRequestDto.getLanguage())
-                .year(bookRequestDto.getYear())
+                .publicationYear(bookRequestDto.getPublicationYear())
                 .pages(bookRequestDto.getPages())
                 .observation(bookRequestDto.getObservation())
                 .donation(bookRequestDto.getDonation())
@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
         existingBook.setTopics(bookValidator.validateTopicsId(bookRequestDto.getTopicsId()));
         existingBook.setEdition(bookRequestDto.getEdition());
         existingBook.setLanguage(bookRequestDto.getLanguage());
-        existingBook.setYear(bookRequestDto.getYear());
+        existingBook.setPublicationYear(bookRequestDto.getPublicationYear());
         existingBook.setPages(bookRequestDto.getPages());
         existingBook.setObservation(bookRequestDto.getObservation());
         existingBook.setDonation(bookRequestDto.getDonation());

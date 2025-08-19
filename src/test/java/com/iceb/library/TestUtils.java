@@ -1,5 +1,6 @@
 package com.iceb.library;
 
+import com.iceb.library.dto.RolesResponseDto;
 import com.iceb.library.dto.author.AuthorRequestDto;
 import com.iceb.library.dto.author.AuthorResponseDto;
 import com.iceb.library.dto.book.BookRequestDto;
@@ -8,6 +9,7 @@ import com.iceb.library.dto.book.BookSearchDto;
 import com.iceb.library.dto.borrow.BorrowItemRequestDto;
 import com.iceb.library.dto.borrow.BorrowItemResponseDto;
 import com.iceb.library.dto.borrow.BorrowItemReturnDto;
+import com.iceb.library.dto.borrow.BorrowItemUpdateDto;
 import com.iceb.library.dto.borrow.BorrowRequestDto;
 import com.iceb.library.dto.borrow.BorrowResponseDto;
 import com.iceb.library.dto.borrow.BorrowSearchDto;
@@ -18,12 +20,10 @@ import com.iceb.library.dto.genre.GenreRequestDto;
 import com.iceb.library.dto.genre.GenreResponseDto;
 import com.iceb.library.dto.publisher.PublisherRequestDto;
 import com.iceb.library.dto.publisher.PublisherResponseDto;
-import com.iceb.library.dto.RolesResponseDto;
 import com.iceb.library.dto.topic.TopicRequestDto;
 import com.iceb.library.dto.topic.TopicResponseDto;
 import com.iceb.library.entity.Author;
 import com.iceb.library.entity.Book;
-import com.iceb.library.dto.borrow.BorrowItemUpdateDto;
 import com.iceb.library.entity.Borrow;
 import com.iceb.library.entity.BorrowItem;
 import com.iceb.library.entity.Customer;
@@ -46,7 +46,6 @@ public class TestUtils {
     private static final UUID BORROW_ID = UUID.fromString("123e4567-e89b-12d3-a456-426614174013");
     private static final UUID BORROW_ITEM_ID = UUID.fromString("123e4567-e89b-12d3-a456-426614174012");
     private static final UUID BOOK_ID = UUID.fromString("123e4567-e89b-12d3-a456-426614174009");
-
 
 
     public static Publisher publisher(Boolean archived) {
@@ -147,7 +146,7 @@ public class TestUtils {
                 .topics(List.of(topic(false)))
                 .edition("Test Edition")
                 .language("Test Language")
-                .year(2023)
+                .publicationYear(2023)
                 .pages(100)
                 .observation("Test Observation")
                 .donation(true)
@@ -168,7 +167,7 @@ public class TestUtils {
                 .topicsId(List.of(TOPIC_ID))
                 .edition("Test Edition")
                 .language("Test Language")
-                .year(2023)
+                .publicationYear(2023)
                 .pages(100)
                 .observation("Test Observation")
                 .donation(true)
@@ -186,7 +185,7 @@ public class TestUtils {
                 .topicsId(List.of(TOPIC_ID))
                 .edition("Test Edition")
                 .language("Test Language")
-                .year(2023)
+                .publicationYear(2023)
                 .pages(100)
                 .observation("Test Observation")
                 .donation(true)
@@ -207,7 +206,7 @@ public class TestUtils {
                 .topic("Test Topic")
                 .edition("Test Edition")
                 .language("Test Language")
-                .year(2023)
+                .publicationYear(2023)
                 .pages(100)
                 .observation("Test Observation")
                 .donation(true)
@@ -331,7 +330,7 @@ public class TestUtils {
                 .build();
     }
 
-    public static Borrow borrow(){
+    public static Borrow borrow() {
         return Borrow.builder()
                 .id(BORROW_ID)
                 .customer(customer(false))
