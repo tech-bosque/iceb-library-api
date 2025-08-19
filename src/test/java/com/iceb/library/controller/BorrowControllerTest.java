@@ -8,12 +8,17 @@ import com.iceb.library.dto.borrow.BorrowItemUpdateDto;
 import com.iceb.library.dto.borrow.BorrowRequestDto;
 import com.iceb.library.dto.borrow.BorrowResponseDto;
 import com.iceb.library.dto.borrow.BorrowSearchDto;
+import com.iceb.library.security.JwtDecoder;
+import com.iceb.library.security.JwtToPrincipalConverter;
 import com.iceb.library.service.BorrowService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,8 +32,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WithMockUser(roles = "ADMIN")
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test")
 @WebMvcTest(BorrowController.class)
 public class BorrowControllerTest {
+
+    @MockBean
+    private JwtDecoder jwtDecoder;
+
+    @MockBean
+    private JwtToPrincipalConverter jwtToPrincipalConverter;
 
     @Autowired
     private MockMvc mockMvc;
