@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                         .requestMatchers(
                             "/",
                             "/api/login",
-                            "/api/register",
+                            "/api/customer",
                             "/swagger-ui/**",
                             "/v3/api-docs/**",
                             "/error"
