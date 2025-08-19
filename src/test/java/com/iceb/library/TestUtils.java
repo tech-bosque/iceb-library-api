@@ -224,7 +224,7 @@ public class TestUtils {
                 .email("test@example.com")
                 .password("test")
                 .phone("1234567890")
-                .role(Role.ADMIN)
+                .role(Role.ROLE_ADMIN)
                 .archived(archived)
                 .build();
     }
@@ -235,7 +235,7 @@ public class TestUtils {
                 .email("test@example.com")
                 .password("test")
                 .phone("1234567890")
-                .role(Role.ADMIN)
+                .role(Role.ROLE_ADMIN)
                 .build();
     }
 
@@ -245,7 +245,7 @@ public class TestUtils {
                 .name("Test Customer")
                 .email("test@example.com")
                 .phone("1234567890")
-                .role(Role.ADMIN)
+                .role(Role.ROLE_ADMIN)
                 .archived(archived)
                 .build();
     }
@@ -255,7 +255,7 @@ public class TestUtils {
                 .name("Test Customer")
                 .email("test@example.com")
                 .phone("1234567890")
-                .role(List.of(Role.LIBRARIAN).toString())
+                .role(List.of(Role.ROLE_LIBRARIAN).toString())
                 .archived(false)
                 .build();
     }

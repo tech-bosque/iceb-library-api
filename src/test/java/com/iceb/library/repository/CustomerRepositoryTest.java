@@ -27,7 +27,7 @@ public class CustomerRepositoryTest extends TestRepositoryHelper {
                 .email("second@test.com")
                 .phone("1234567890")
                 .password("test")
-                .role(Role.LIBRARIAN)
+                .role(Role.ROLE_LIBRARIAN)
                 .archived(false)
                 .build();
 

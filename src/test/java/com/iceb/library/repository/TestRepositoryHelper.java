@@ -78,7 +78,7 @@ public abstract class TestRepositoryHelper {
         bookTest = bookRepository.save(bookTest);
 
         customerTest = TestUtils.customer(false);
-        customerTest.setRole(Role.ADMIN);
+        customerTest.setRole(Role.ROLE_ADMIN);
         customerTest = customerRepository.save(customerTest);
 
         borrowTest = TestUtils.borrow();
