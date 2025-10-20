@@ -11,8 +11,8 @@ import com.iceb.library.utils.TranslatorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,6 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
+
+        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encryptedPassword = passwordEncoder.encode(customerRequestDto.getPassword());
+        customerRequestDto.setPassword(encryptedPassword);
+
         logger.info("Creating customer");
         logger.debug("Creating customer with details: {}", customerRequestDto);
 
