@@ -1,5 +1,9 @@
 package com.iceb.library.dto.book;
 
+import com.iceb.library.dto.author.AuthorResponseDto;
+import com.iceb.library.dto.genre.GenreResponseDto;
+import com.iceb.library.dto.publisher.PublisherResponseDto;
+import com.iceb.library.dto.topic.TopicResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +22,13 @@ public class BookResponseDto {
 
     private String name;
 
-    private List<UUID> authorsId;
+    private List<AuthorResponseDto> authors;
 
-    private UUID publisherId;
+    private PublisherResponseDto publisher;
 
-    private List<UUID> genresId;
+    private List<GenreResponseDto> genres;
 
-    private List<UUID> topicsId;
+    private List<TopicResponseDto> topics;
 
     private String edition;
 
