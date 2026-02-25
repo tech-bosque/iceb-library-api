@@ -53,20 +53,20 @@ public class TranslatorUtils {
                 .isbn(book.getIsbn())
                 .urlCover(book.getUrlCover())
                 .archived(book.getArchived())
-                .publisherId(book.getPublisher() != null ? book.getPublisher().getId() : null)
-                .authorsId(book.getAuthors() != null
+                .publisher(book.getPublisher() != null ? publisherToPublisherResponseDto(book.getPublisher()) : null)
+                .authors(book.getAuthors() != null
                         ? book.getAuthors().stream()
-                        .map(Author::getId)
+                        .map(TranslatorUtils::authorToAuthorResponseDto)
                         .collect(Collectors.toList())
                         : null)
-                .genresId(book.getGenres() != null
+                .genres(book.getGenres() != null
                         ? book.getGenres().stream()
-                        .map(Genre::getId)
+                        .map(TranslatorUtils::genreToGenreResponseDto)
                         .collect(Collectors.toList())
                         : null)
-                .topicsId(book.getTopics() != null
+                .topics(book.getTopics() != null
                         ? book.getTopics().stream()
-                        .map(Topic::getId)
+                        .map(TranslatorUtils::topicToTopicResponseDto)
                         .collect(Collectors.toList())
                         : null)
                 .available(book.getAvailable())
