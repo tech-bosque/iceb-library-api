@@ -4,6 +4,7 @@ import com.iceb.library.dto.customer.CustomerResponseDto;
 import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.entity.Customer;
+import com.iceb.library.exception.CustomerAlreadyExistsException;
 import com.iceb.library.exception.CustomerNotFoundException;
 import com.iceb.library.repository.CustomerRepository;
 import com.iceb.library.service.CustomerService;
@@ -28,6 +29,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
+
+        customerRepository.findByEmail(customerRequestDto.getEmail())
+                .ifPresent(existing -> {
+                    throw new CustomerAlreadyExistsException("A customer with this email already exists.");
+                });
 
         final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = passwordEncoder.encode(customerRequestDto.getPassword());
@@ -71,8 +77,16 @@ public class CustomerServiceImpl implements CustomerService {
         logger.debug("Updating customer with ID: {} with details: {}", id, customerRequestDto);
 
         Customer existingCustomer = findCustomerById(id);
+        String newEmail = customerRequestDto.getEmail();
+        if (!newEmail.equals(existingCustomer.getEmail())) {
+            customerRepository.findByEmail(newEmail)
+                    .filter(other -> !other.getId().equals(existingCustomer.getId()))
+                    .ifPresent(ignored -> {
+                        throw new CustomerAlreadyExistsException("A customer with this email already exists.");
+                    });
+        }
         existingCustomer.setName(customerRequestDto.getName());
-        existingCustomer.setEmail(customerRequestDto.getEmail());
+        existingCustomer.setEmail(newEmail);
         existingCustomer.setPhone(customerRequestDto.getPhone());
         existingCustomer.setRole(customerRequestDto.getRole());
 
