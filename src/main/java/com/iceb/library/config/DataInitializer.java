@@ -2,6 +2,7 @@ package com.iceb.library.config;
 
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.enums.Role;
+import com.iceb.library.exception.CustomerAlreadyExistsException;
 import com.iceb.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,17 +17,16 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        try {
+            CustomerRequestDto customerRequestDto =  CustomerRequestDto.builder()
+                                                        .name("Admin User")
+                                                        .email("admin@test.com")
+                                                        .password("admin")
+                                                        .phone("1234567890")
+                                                        .role(Role.ROLE_ADMIN)
+                                                        .build();
 
-        CustomerRequestDto customerRequestDto =  CustomerRequestDto.builder()
-                                                    .name("Admin User")
-                                                    .email("admin@test.com")
-                                                    .password("admin")
-                                                    .phone("1234567890")
-                                                    .role(Role.ROLE_ADMIN)
-                                                    .build();
-
-
-        customerService.createCustomer(customerRequestDto);
-
+            customerService.createCustomer(customerRequestDto);
+        } catch (CustomerAlreadyExistsException ignored) {}
     }
 }
