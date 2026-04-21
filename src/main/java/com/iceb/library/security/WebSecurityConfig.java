@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -45,26 +44,25 @@ public class WebSecurityConfig {
                             config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
                             config.setAllowCredentials(true);
                             config.setMaxAge(3600L);
-                            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                            source.registerCorsConfiguration("/**", config);
                             return config;
                         })
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                        .formLogin(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(
-                            "/",
-                            "/api/login",
-                            "/api/customer",
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/error"
+                                "/",
+                                "/api/login",
+                                "/api/customer",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/error"
                         ).permitAll()
-                        .requestMatchers("/api/book/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/api/book/search").permitAll()
+                        .requestMatchers("/api/book/**").hasAnyRole("LIBRARIAN", "ADMIN")
                         .requestMatchers("/api/roles/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
