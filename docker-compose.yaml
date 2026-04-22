@@ -5,7 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: library-api
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/iceb-library
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -20,10 +21,15 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: iceb-library
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d iceb-library || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:

@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                             CorsConfiguration config = new CorsConfiguration();
                             config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
                             config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
-                            config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+                            config.addAllowedHeader(CorsConfiguration.ALL);
                             config.setAllowCredentials(true);
                             config.setMaxAge(3600L);
                             return config;
