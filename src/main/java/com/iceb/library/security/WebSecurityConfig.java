@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -39,8 +41,21 @@ public class WebSecurityConfig {
                 .cors(cors ->
                         cors.configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
+<<<<<<< Updated upstream
                             config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
                             config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
+=======
+                            config.setAllowedOrigins(
+                                    Arrays.stream(allowedOrigins.split(","))
+                                            .map(String::trim)
+                                            .filter(s -> !s.isEmpty())
+                                            .collect(Collectors.toList()));
+                            config.setAllowedMethods(
+                                    Arrays.stream(allowedMethods.split(","))
+                                            .map(String::trim)
+                                            .filter(s -> !s.isEmpty())
+                                            .collect(Collectors.toList()));
+>>>>>>> Stashed changes
                             config.addAllowedHeader(CorsConfiguration.ALL);
                             config.setAllowCredentials(true);
                             config.setMaxAge(3600L);
@@ -53,6 +68,7 @@ public class WebSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/",
                                 "/api/login",
