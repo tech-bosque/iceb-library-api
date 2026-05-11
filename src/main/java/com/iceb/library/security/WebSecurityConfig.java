@@ -41,10 +41,6 @@ public class WebSecurityConfig {
                 .cors(cors ->
                         cors.configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();
-<<<<<<< Updated upstream
-                            config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
-                            config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
-=======
                             config.setAllowedOrigins(
                                     Arrays.stream(allowedOrigins.split(","))
                                             .map(String::trim)
@@ -55,7 +51,6 @@ public class WebSecurityConfig {
                                             .map(String::trim)
                                             .filter(s -> !s.isEmpty())
                                             .collect(Collectors.toList()));
->>>>>>> Stashed changes
                             config.addAllowedHeader(CorsConfiguration.ALL);
                             config.setAllowCredentials(true);
                             config.setMaxAge(3600L);
