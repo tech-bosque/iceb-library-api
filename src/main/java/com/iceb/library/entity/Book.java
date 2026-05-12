@@ -37,7 +37,8 @@ public class Book {
     )
     private List<Author> authors;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "publisher_id", nullable = true)
     private Publisher publisher;
 
     @ManyToMany
