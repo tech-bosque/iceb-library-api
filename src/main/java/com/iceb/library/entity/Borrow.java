@@ -6,8 +6,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,8 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private LocalDate borrowDate;

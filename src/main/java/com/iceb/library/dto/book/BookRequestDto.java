@@ -1,5 +1,6 @@
 package com.iceb.library.dto.book;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Builder
 public class BookRequestDto {
 
+    @NotBlank(message = "Name is required and cannot be empty or whitespace.")
     private String name;
 
     private List<UUID> authorsId;
@@ -38,6 +40,7 @@ public class BookRequestDto {
 
     private String assetNumber;
 
+    @NotBlank(message = "ISBN is required and cannot be empty or whitespace.")
     private String isbn;
 
     private String urlCover;

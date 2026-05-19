@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,16 +29,32 @@ public class Book {
 
     private String name;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "authors_id")
+    )
     private List<Author> authors;
 
-    @OneToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "publisher_id", nullable = true)
     private Publisher publisher;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "book_genres",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genres_id")
+    )
     private List<Genre> genres;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "book_topics",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "topics_id")
+    )
     private List<Topic> topics;
 
     private String edition;

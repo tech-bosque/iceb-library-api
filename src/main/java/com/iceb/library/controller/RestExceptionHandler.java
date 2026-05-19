@@ -7,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.stream.Collectors;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 
@@ -23,8 +25,17 @@ public class RestExceptionHandler {
                 .map(f -> new InvalidParameter(f.getField(), f.getDefaultMessage()))
                 .toList();
 
+        String detail = ex.getFieldErrors().stream()
+                .map(f -> f.getField() + ": " + f.getDefaultMessage())
+                .collect(Collectors.joining(" "));
+
+        if (detail.isBlank()) {
+            detail = "One or more fields failed validation.";
+        }
+
         var pb = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pb.setTitle("Your request parameters didn't validate.");
+        pb.setTitle("Validation failed");
+        pb.setDetail(detail);
         pb.setProperty("invalid-parameters", fieldErrors);
 
         return pb;

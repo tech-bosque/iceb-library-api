@@ -90,4 +90,24 @@ public class BookValidatorTest {
 
         assertThat(publisher).usingRecursiveComparison().isEqualTo(result);
     }
+
+    @Test
+    void validatePublisherIdWhenNullReturnsNull() {
+        assertThat(bookValidator.validatePublisherId(null)).isNull();
+    }
+
+    @Test
+    void validateAuthorsIdWhenNullReturnsEmpty() {
+        assertThat(bookValidator.validateAuthorsId(null)).isEmpty();
+    }
+
+    @Test
+    void validateGenresIdWhenNullReturnsEmpty() {
+        assertThat(bookValidator.validateGenresId(null)).isEmpty();
+    }
+
+    @Test
+    void validateTopicsIdWhenNullReturnsEmpty() {
+        assertThat(bookValidator.validateTopicsId(null)).isEmpty();
+    }
 }

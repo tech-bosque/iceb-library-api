@@ -15,18 +15,20 @@ public class DataInitializer implements CommandLineRunner {
     private CustomerService customerService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        String adminEmail = "admin@test.com";
+        if (customerService.findByEmail(adminEmail).isPresent()) {
+            return;
+        }
 
-        CustomerRequestDto customerRequestDto =  CustomerRequestDto.builder()
-                                                    .name("Admin User")
-                                                    .email("admin@test.com")
-                                                    .password("admin")
-                                                    .phone("1234567890")
-                                                    .role(Role.ROLE_ADMIN)
-                                                    .build();
-
+        CustomerRequestDto customerRequestDto = CustomerRequestDto.builder()
+                .name("Admin User")
+                .email(adminEmail)
+                .password("admin")
+                .phone("1234567890")
+                .role(Role.ROLE_ADMIN)
+                .build();
 
         customerService.createCustomer(customerRequestDto);
-
     }
 }
