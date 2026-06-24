@@ -1,6 +1,7 @@
 package com.iceb.library.service.impl;
 
 import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPasswordUpdateDto;
 import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
 import com.iceb.library.dto.customer.CustomerSearchDto;
@@ -10,6 +11,7 @@ import com.iceb.library.entity.Customer;
 import com.iceb.library.exception.CustomerAlreadyExistsException;
 import com.iceb.library.exception.CustomerNotFoundException;
 import com.iceb.library.exception.InvalidCustomerEmailException;
+import com.iceb.library.exception.InvalidCustomerPasswordException;
 import com.iceb.library.repository.CustomerRepository;
 import com.iceb.library.service.CustomerService;
 import com.iceb.library.utils.TranslatorUtils;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
@@ -131,6 +137,29 @@ public class CustomerServiceImpl implements CustomerService {
         Customer updatedCustomer = customerRepository.save(existingCustomer);
 
         logger.info("Updated customer phone successfully");
+        return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
+    }
+
+    @Override
+    public CustomerResponseDto updateCustomerPassword(UUID id, CustomerPasswordUpdateDto customerPasswordUpdateDto) {
+        logger.info("Updating customer password");
+        logger.debug("Updating customer password with ID: {}", id);
+
+        Customer existingCustomer = findCustomerById(id);
+        String oldPassword = customerPasswordUpdateDto.getOldPassword();
+        String newPassword = customerPasswordUpdateDto.getNewPassword();
+
+        if (!passwordEncoder.matches(oldPassword, existingCustomer.getPassword())) {
+            throw new InvalidCustomerPasswordException("The provided current password does not match.");
+        }
+
+        if (!passwordEncoder.matches(newPassword, existingCustomer.getPassword())) {
+            existingCustomer.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+
+        logger.info("Updated customer password successfully");
         return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
     }
 

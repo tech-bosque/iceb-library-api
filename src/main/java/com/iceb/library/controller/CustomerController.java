@@ -1,6 +1,7 @@
 package com.iceb.library.controller;
 
 import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPasswordUpdateDto;
 import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
@@ -64,6 +65,13 @@ public class CustomerController {
     @Operation(summary = "Update a customer's phone")
     public ResponseEntity<CustomerResponseDto> updateCustomerPhone(@PathVariable UUID id, @Valid @RequestBody CustomerPhoneUpdateDto customerPhoneUpdateDto) {
         CustomerResponseDto updatedCustomer = customerService.updateCustomerPhone(id, customerPhoneUpdateDto);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @PatchMapping("/{id}/password")
+    @Operation(summary = "Update a customer's password")
+    public ResponseEntity<CustomerResponseDto> updateCustomerPassword(@PathVariable UUID id, @Valid @RequestBody CustomerPasswordUpdateDto customerPasswordUpdateDto) {
+        CustomerResponseDto updatedCustomer = customerService.updateCustomerPassword(id, customerPasswordUpdateDto);
         return ResponseEntity.ok(updatedCustomer);
     }
 

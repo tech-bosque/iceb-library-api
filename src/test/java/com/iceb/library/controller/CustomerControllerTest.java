@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iceb.library.TestUtils;
 import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPasswordUpdateDto;
 import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
@@ -156,6 +157,27 @@ public class CustomerControllerTest {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/customer/{id}/phone", customerResponseDto.getId())
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(CustomerPhoneUpdateDto.builder().phone("9999999999").build()))
+                        .accept(APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        String resultString = result.andReturn().getResponse().getContentAsString();
+        CustomerResponseDto response = mapper.readValue(resultString, CustomerResponseDto.class);
+
+        Assertions.assertEquals(customerResponseDto, response);
+    }
+
+    @Test
+    void updateCustomerPasswordTest() throws Exception {
+        CustomerResponseDto customerResponseDto = TestUtils.customerResponseDto(false);
+
+        when(customerService.updateCustomerPassword(any(UUID.class), any(CustomerPasswordUpdateDto.class))).thenReturn(customerResponseDto);
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/customer/{id}/password", customerResponseDto.getId())
+                        .contentType(APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(CustomerPasswordUpdateDto.builder()
+                                .oldPassword("old-password")
+                                .newPassword("new-password")
+                                .build()))
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isOk());
 

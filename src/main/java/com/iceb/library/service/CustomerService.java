@@ -2,6 +2,7 @@ package com.iceb.library.service;
 
 import com.iceb.library.entity.Customer;
 import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPasswordUpdateDto;
 import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
@@ -20,6 +21,7 @@ public interface CustomerService {
     CustomerResponseDto updateCustomer(UUID id, CustomerUpdateDto customerUpdateDto);
     CustomerResponseDto updateCustomerEmail(UUID id, CustomerEmailUpdateDto customerEmailUpdateDto);
     CustomerResponseDto updateCustomerPhone(UUID id, CustomerPhoneUpdateDto customerPhoneUpdateDto);
+    CustomerResponseDto updateCustomerPassword(UUID id, CustomerPasswordUpdateDto customerPasswordUpdateDto);
     CustomerResponseDto deleteCustomer(UUID id);
     Optional<Customer> findByEmail(String email);
 }
