@@ -107,11 +107,19 @@ public class TranslatorUtils {
     }
 
     public static CustomerResponseDto customerToCustomerResponseDto(Customer customer) {
+        return customerToCustomerResponseDto(customer, false);
+    }
+
+    public static CustomerResponseDto customerToCustomerResponseDto(Customer customer, boolean maskSensitiveData) {
         return CustomerResponseDto.builder()
                 .id(customer.getId())
                 .name(customer.getName())
-                .email(customer.getEmail())
-                .phone(customer.getPhone())
+                .email(maskSensitiveData
+                        ? DataMaskingUtils.maskEmail(customer.getEmail())
+                        : customer.getEmail())
+                .phone(maskSensitiveData
+                        ? DataMaskingUtils.maskPhone(customer.getPhone())
+                        : customer.getPhone())
                 .role(customer.getRole())
                 .archived(customer.getArchived())
                 .build();

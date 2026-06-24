@@ -1,11 +1,15 @@
 package com.iceb.library.service.impl;
 
+import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
 import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
+import com.iceb.library.dto.customer.CustomerUpdateDto;
 import com.iceb.library.entity.Customer;
 import com.iceb.library.exception.CustomerAlreadyExistsException;
 import com.iceb.library.exception.CustomerNotFoundException;
+import com.iceb.library.exception.InvalidCustomerEmailException;
 import com.iceb.library.repository.CustomerRepository;
 import com.iceb.library.service.CustomerService;
 import com.iceb.library.utils.TranslatorUtils;
@@ -72,29 +76,61 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponseDto updateCustomer(UUID id, CustomerRequestDto customerRequestDto) {
+    public CustomerResponseDto updateCustomer(UUID id, CustomerUpdateDto customerUpdateDto) {
         logger.info("Updating customer");
-        logger.debug("Updating customer with ID: {} with details: {}", id, customerRequestDto);
+        logger.debug("Updating customer with ID: {} with details: {}", id, customerUpdateDto);
 
         Customer existingCustomer = findCustomerById(id);
-        String newEmail = customerRequestDto.getEmail();
-        if (!newEmail.equals(existingCustomer.getEmail())) {
-            customerRepository.findByEmail(newEmail)
-                    .filter(other -> !other.getId().equals(existingCustomer.getId()))
-                    .ifPresent(ignored -> {
-                        throw new CustomerAlreadyExistsException("A customer with this email already exists.");
-                    });
-        }
-        existingCustomer.setName(customerRequestDto.getName());
-        existingCustomer.setEmail(newEmail);
-        existingCustomer.setPhone(customerRequestDto.getPhone());
-        existingCustomer.setRole(customerRequestDto.getRole());
+        existingCustomer.setName(customerUpdateDto.getName());
+        existingCustomer.setRole(customerUpdateDto.getRole());
 
         Customer updatedCustomer = customerRepository.save(existingCustomer);
 
         logger.info("Updated customer successfully");
         logger.debug("Updated customer: {}", updatedCustomer);
 
+        return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
+    }
+
+    @Override
+    public CustomerResponseDto updateCustomerEmail(UUID id, CustomerEmailUpdateDto customerEmailUpdateDto) {
+        logger.info("Updating customer email");
+        logger.debug("Updating customer email with ID: {}", id);
+
+        Customer existingCustomer = findCustomerById(id);
+        String oldEmail = customerEmailUpdateDto.getOldEmail();
+        String newEmail = customerEmailUpdateDto.getNewEmail();
+
+        if (!oldEmail.equals(existingCustomer.getEmail())) {
+            throw new InvalidCustomerEmailException("The provided current email does not match.");
+        }
+
+        if (!newEmail.equals(existingCustomer.getEmail())) {
+            customerRepository.findByEmail(newEmail)
+                    .filter(other -> !other.getId().equals(existingCustomer.getId()))
+                    .ifPresent(ignored -> {
+                        throw new CustomerAlreadyExistsException("A customer with this email already exists.");
+                    });
+            existingCustomer.setEmail(newEmail);
+        }
+
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+
+        logger.info("Updated customer email successfully");
+        return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
+    }
+
+    @Override
+    public CustomerResponseDto updateCustomerPhone(UUID id, CustomerPhoneUpdateDto customerPhoneUpdateDto) {
+        logger.info("Updating customer phone");
+        logger.debug("Updating customer phone with ID: {}", id);
+
+        Customer existingCustomer = findCustomerById(id);
+        existingCustomer.setPhone(customerPhoneUpdateDto.getPhone());
+
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+
+        logger.info("Updated customer phone successfully");
         return TranslatorUtils.customerToCustomerResponseDto(updatedCustomer);
     }
 
@@ -110,7 +146,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Archived customer successfully");
         logger.debug("Archived customer with ID: {}", id);
 
-        return TranslatorUtils.customerToCustomerResponseDto(archivedCustomer);
+        return TranslatorUtils.customerToCustomerResponseDto(archivedCustomer, true);
     }
 
     @Override
@@ -121,7 +157,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerRepository.searchCustomers(customerSearchDto);
 
         List<CustomerResponseDto> responseDtos = customers.stream()
-                .map(TranslatorUtils::customerToCustomerResponseDto)
+                .map(customer -> TranslatorUtils.customerToCustomerResponseDto(customer, true))
                 .collect(Collectors.toList());
 
         logger.debug("Fetched customers: {}", responseDtos);

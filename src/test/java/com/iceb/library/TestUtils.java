@@ -15,6 +15,7 @@ import com.iceb.library.dto.borrow.BorrowResponseDto;
 import com.iceb.library.dto.borrow.BorrowSearchDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
+import com.iceb.library.dto.customer.CustomerUpdateDto;
 import com.iceb.library.dto.customer.CustomerSearchDto;
 import com.iceb.library.dto.genre.GenreRequestDto;
 import com.iceb.library.dto.genre.GenreResponseDto;
@@ -237,6 +238,13 @@ public class TestUtils {
                 .email("test@example.com")
                 .password("test")
                 .phone("1234567890")
+                .role(Role.ROLE_ADMIN)
+                .build();
+    }
+
+    public static CustomerUpdateDto customerUpdateDto() {
+        return CustomerUpdateDto.builder()
+                .name("Test Customer")
                 .role(Role.ROLE_ADMIN)
                 .build();
     }

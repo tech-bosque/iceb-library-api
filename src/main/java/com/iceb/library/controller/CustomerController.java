@@ -1,8 +1,11 @@
 package com.iceb.library.controller;
 
+import com.iceb.library.dto.customer.CustomerEmailUpdateDto;
+import com.iceb.library.dto.customer.CustomerPhoneUpdateDto;
 import com.iceb.library.dto.customer.CustomerRequestDto;
 import com.iceb.library.dto.customer.CustomerResponseDto;
 import com.iceb.library.dto.customer.CustomerSearchDto;
+import com.iceb.library.dto.customer.CustomerUpdateDto;
 import com.iceb.library.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,9 +47,23 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update a customer")
-    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable UUID id, @Valid @RequestBody CustomerRequestDto customerRequestDto) {
-        CustomerResponseDto updatedCustomer = customerService.updateCustomer(id, customerRequestDto);
+    @Operation(summary = "Update a customer's name and role")
+    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable UUID id, @Valid @RequestBody CustomerUpdateDto customerUpdateDto) {
+        CustomerResponseDto updatedCustomer = customerService.updateCustomer(id, customerUpdateDto);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @PatchMapping("/{id}/email")
+    @Operation(summary = "Update a customer's email")
+    public ResponseEntity<CustomerResponseDto> updateCustomerEmail(@PathVariable UUID id, @Valid @RequestBody CustomerEmailUpdateDto customerEmailUpdateDto) {
+        CustomerResponseDto updatedCustomer = customerService.updateCustomerEmail(id, customerEmailUpdateDto);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @PatchMapping("/{id}/phone")
+    @Operation(summary = "Update a customer's phone")
+    public ResponseEntity<CustomerResponseDto> updateCustomerPhone(@PathVariable UUID id, @Valid @RequestBody CustomerPhoneUpdateDto customerPhoneUpdateDto) {
+        CustomerResponseDto updatedCustomer = customerService.updateCustomerPhone(id, customerPhoneUpdateDto);
         return ResponseEntity.ok(updatedCustomer);
     }
 
